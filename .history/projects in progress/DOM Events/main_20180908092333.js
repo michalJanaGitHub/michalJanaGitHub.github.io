@@ -8,8 +8,12 @@ window.onload = function(){
         console.log("CLICK!!!");
     });
 
+    function inputLength(){
+        return input.value.length;
+    }
+
     butEnter.addEventListener("click", function(){
-        if(input.value.length>0){
+        if(inputLength()>0){
             console.log("click is working");  
             var li = document.createElement("li");
             li.appendChild(document.createTextNode(input.value));
@@ -20,7 +24,7 @@ window.onload = function(){
 
     input.addEventListener("keypress", function(event){
         console.log(event.which);
-        if(input.value.length>0 && event.keyCode === 13){
+        if(inputLength()>0 && event.keyCode === 13){
             console.log("click is working");  
             var li = document.createElement("li");
             li.appendChild(document.createTextNode(input.value));

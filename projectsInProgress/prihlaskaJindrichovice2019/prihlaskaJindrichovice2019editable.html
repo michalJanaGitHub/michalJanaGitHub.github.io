@@ -12,19 +12,17 @@
 <body>
   <section>
     <h1>Tyfloturistický oddíl, z.s..</h1>
-    <h1>PŘIHLÁŠKA NA TYFLOTURISTICKÝ LETNÍ TÁBOR PRO DĚTI SE ZRAKOVÝM POSTIŽENÍM 12.-26.7 2019 v Jindřichovicích Pod
-      Smrkem</h1>
+    <h1>PŘIHLÁŠKA NA TYFLOTURISTICKÝ LETNÍ TÁBOR PRO DĚTI SE ZRAKOVÝM POSTIŽENÍM 12.-26.7 2019 v Jindřichovicích Pod Smrkem</h1>
     <form id="frmRegistration">
       <fieldset>
         <legend>Pokyny k vyplnění přihlášky</legend>
-        <p>Kontaktní osoba: Hlavní vedoucí Hana Šimková <a href="mailto:hane.simkove@gmail.com">hane.simkove@gmail.com</a> tel: 720 191 407"</p>
-        <p>V zájmu vašeho dítěte a vešch dalších účastníků a vedoucích tábora prosíme o svědomité vyplnění přihlášky</p>
-        <p>Přihlášku prosím vyplňujte na počítači, ze kterého bude možné ji následně vytisknout.
+        <p>Kontaktní osoba: hlavní vedoucí Hana Šimková <a href="mailto:hane.simkove@gmail.com">hane.simkove@gmail.com</a> tel: 720 191 407.</p>
+        <p>V zájmu vašeho dítěte a všech dalších účastníků a vedoucích tábora. Prosíme o svědomité vyplnění přihlášky.</p>
+        <p>Vyplněnou přihlášku prosím vytiskněte, podepište a naskenovanou, nebo nafocenou pošlete na emailovou adresu hlavní vedoucí tábora.
         </p>
-        <p>Vyplněnou přihlášku prosím vytiskněte, podepište a naskenovanou, nebo nafocenou pošlete na emailovou adresu
-          hlavní vedoucí tábora
+        <p>Přihlášku nebude možné uložit. Vyplňujte na počítači, ze kterého bude možné ji následně vytisknout alespoň do formátu pdf. 
         </p>
-        <p>* Otázky označené hvězdičkou jsou nepovinné
+        <p>Všechny otázky kromě těch označených hvězdičkou jsou povinné.
         </p>
       </fieldset>
 
@@ -32,7 +30,7 @@
       <fieldset>
         <legend>Obecné údaje o dítěti</legend>
         <div>
-          <label for="childName">Jméno a příjmení dítěte</label>
+          <label for="childName">Jméno a příjmení</label>
           <input type="text" name="childName" id="childName">
         </div>
         <div>
@@ -52,12 +50,8 @@
           <input type="text" name="childInsurenceCompany" id="childInsurenceCompany">
         </div>
         <div>
-          <label for="childZTPP">Číslo průkazu ZTP/P</label>
+          <label for="childZTPP">Číslo průkazu ZTP-P</label>
           <input type="text" nsame="chilZTPP" id="childZTPP">
-        </div>
-        <div>
-          <label for="childEmail">Emailová adresa *</label>
-          <input type="text" nsame="childEmail" id="childEmail">
         </div>
       </fieldset>
       <fieldset>
@@ -113,10 +107,6 @@
           <label for="contact3Tel">Telefonní číslo*</label>
           <input type="tel" name="legalRep3Tel" id="legalRep3Tel">
         </div>
-        <div>
-          <label for="contact3Email">e-mail*</label>
-          <input type="email" name="legalRep3Email" id="legalRep3Email">
-        </div>
 
         
       </fieldset>
@@ -147,12 +137,12 @@
           <label for="canBraille">Umí dítě Braillovo písmo?</label>
         </div>
         <div id="canBraille">
-          <label><input type="radio" name="canBraille" value="ano">ano, plynně</label>
+          <label><input type="radio" name="canBraille" value="ano">ano</label>
           <label><input type="radio" name="canBraille" value="trochu">omezeně</label>
           <label><input type="radio" name="canBraille" value="ne">ne</label>
         </div>
         <div>
-          <label for="whiteCane">Je zvyklé chodit s bíou holí?</label>
+          <label for="whiteCane">Je zvyklé chodit s bílou holí?</label>
         </div>
         <div id="canWhiteCane">
           <label><input type="radio" name="canWhiteCane" value="ano">ano</label>
@@ -181,15 +171,14 @@
 
         <div>
           <label for="allDrugs">Uveďte prosím všechny léky, které dítě užívá (název, dávkování - např. "Euthyrox, 1
-            tableta 100mg. ráno po jídle")
+            tableta 100mg, ráno po jídle")
           </label>
           <textarea name="allDrugs" id="allDrugs"></textarea>
         </div>
 
 
         <div>
-          <label for="alergiesCheckboxes">Prosím zaškrtněte, pokud dítě trpí alergickou reakcí na některé z
-            následujících látek:</label>
+          <label for="alergiesCheckboxes">Prosím zaškrtněte, pokud trpí alergií na něco z uvedeného:</label>
         </div>
         <div id="alergiesCheckboxes" class="verticalElements">
           <label><input type="checkbox" name="alergies" value="pollen">pyl</label>
@@ -198,6 +187,16 @@
           <label><input type="checkbox" name="alergies" value="bee_wasp">bodutí včelou/vosou</label>
           <label><input type="checkbox" name="alergies" value="latex">jód (např. v dezinfekcích Betadine)</label>
           <label><input type="checkbox" name="alergies" value="latex">latex (např. gumové rukavice)</label>
+        </div>
+
+
+        <div>
+          <label for="otherAllergiesRadios">Má ještě jiné alergie?</label>
+        </div>
+        <div id="otherAllergiesRadios">
+          <label><input type="radio" name="otherAllergies" value="no">ne</label>
+          <label><input type="radio" name="otherAllergies" value="yes">ano (uveďte podobnosti)</label>
+          <textarea name="otherAllergiesDetails" id="otherAllergiesDetails"></textarea>
         </div>
 
         <div>
@@ -211,17 +210,7 @@
         </div>
 
         <div>
-          <label for="otherAllergiesRadios">Má ještě jiné alergie?</label>
-        </div>
-        <div id="otherAllergiesRadios">
-          <label><input type="radio" name="otherAllergies" value="no">ne</label>
-          <label><input type="radio" name="otherAllergies" value="yes">ano (uveďte podobnosti)</label>
-          <textarea name="otherAllergiesDetails" id="otherAllergiesDetails"></textarea>
-        </div>
-
-
-        <div>
-          <label for="ilnessesCheckboxes">Prosím zaškrtněte, pokud dítě trpí nekterým z následujících
+          <label for="ilnessesCheckboxes">Prosím zaškrtněte, pokud dítě trpí některým z následujících
             onemocnění:</label>
         </div>
         <div id="ilnessesCheckboxes">
@@ -250,7 +239,7 @@
 
         <div>
           <label for="otherLimmitationsRadios">Má Vaše dítě nějaká pohybová nebo režimová omezení? (např. nesmí skákat
-            kvůli glaukomu, riziku odchlípení sítnice apod.) (dlouhá odpověď)</label>
+            kvůli glaukomu, riziku odchlípení sítnice apod.)</label>
         </div>
         <div id="otherLimmitationsRadios">
           <label><input type="radio" name="otherAllergies" value="no">ne</label>
@@ -260,7 +249,7 @@
 
         <div>
           <label for="somethingElseToKnowRadios">Je ještě něco, co bychom měli o vašem dítěti vědět? (např. často
-            omdlévá, má problémy s chůzí na dlouhé vzdálenosti, trpí mořskou nemocí)
+            omdlévá, má problémy s chůzí na dlouhé vzdálenosti, atp.)
           </label>
         </div>
         <div id="somethingElseToKnowRadios">
@@ -303,7 +292,7 @@
         </div>
 
         <div>
-          <label for="nightBattleGameRadios">Může se ůčastnit noční bojové hry? (např kvůli epilepsii)</label>
+          <label for="nightBattleGameRadios">Může se účastnit noční bojové hry? (např kvůli epilepsii)</label>
         </div>
         <div id="nightBattleGameRadios">
           <label><input type="radio" name="nightBattleGame" value="yes">ano</label>

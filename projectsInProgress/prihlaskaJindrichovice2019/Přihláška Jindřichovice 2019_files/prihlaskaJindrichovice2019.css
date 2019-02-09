@@ -1,0 +1,73 @@
+:root{
+  --page-background: #ffffff;
+  --form-background: rgb(255, 255, 255);
+  --dark-grey: #2e2e2e;
+  --title-color: #050505;
+  --default-space: 20px;
+  box-sizing: border-box;
+}
+*, *::before, *::after{
+  box-sizing: inherit;
+}
+
+
+body{
+  background: var(--page-background);
+  font-family: Verdana, sans-serif;
+  font-size: 1rem;
+}
+section {
+  margin: 0 auto;
+}
+section > h1{
+  color: var(--title-color); 
+}
+form fieldset {
+  background: var(--form-background);
+  padding: var(--default-space);
+  border: 1px solid var(--dark-grey);
+  border-radius: 3px;
+  margin-bottom: var(--default-space);
+}
+form fieldset legend{
+  font-size: 1em;
+  color: var(--title-color);
+  padding: 0 var(--default-space);
+  background: var(--form-background);
+  /* border: 1px solid var(--dark-grey); */
+  /* border-radius: 5px; */
+}
+form fieldset > div {
+  margin-bottom: var(--default-space);
+}
+input, select, button, textarea{
+  font-size: inherit;
+}
+form input {
+  padding: 5px;
+  width: 100%;
+  border: 1px solid var(var(--dark-grey));
+}
+
+form input[type=radio], form input[type=checkbox] {
+  width:auto
+}
+textarea{
+  width:100%;
+  resize: vertical;
+}
+
+div.verticalElements > label {
+  display:block;
+}
+
+.bottomBorder {
+  margin-top: 20px;
+  margin-left: 0px;  
+  border-bottom: 1px solid
+}
+
+input[type=submit], input[type=button]{
+  width:auto
+}
+

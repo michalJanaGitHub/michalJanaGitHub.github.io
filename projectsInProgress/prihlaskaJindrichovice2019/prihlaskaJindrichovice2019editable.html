@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Přihláška Jindřichovice 2019</title>
   <link rel="stylesheet" href="./prihlaskaJindrichovice2019editable_files/prihlaskaJindrichovice2019.css">
-  <script src="./prihlaskaJindrichovice2019editable_files/prihlaskaJindrichovice2019.js.téléchargement"></script>
+  <script src="./prihlaskaJindrichovice2019editable_files/prihlaskaJindrichovice2019.js"></script>
 </head>
 
 <body>
   <section>
-    <h1>PŘIHLÁŠKA NA TYFLOTURISTICKÝ LETNÍ TÁBOR PRO DĚTI SE ZRAKOVÝM POSTIŽENÍM 12.-26.7 2019 v Jindřichovicích Pod Smrkem
+    <h1>PŘIHLÁŠKA NA LETNÍ TÁBOR PRO DĚTI SE ZRAKOVÝM POSTIŽENÍM 12.-26.7 2019 v Jindřichovicích Pod Smrkem
     </h1>
     <h4>Pořádá:</h4>
     <h4>Tyfloturistický oddíl, z.s.<br>      
@@ -32,7 +32,6 @@
         </p>
       </fieldset>
 
-
       <fieldset>
         <legend>Obecné údaje o dítěti</legend>
         <div>
@@ -40,12 +39,8 @@
           <input type="text" name="childName" id="childName">
         </div>
         <div>
-          <label for="childDateOfBirth">Datum narození</label>
-          <input type="date" name="childDateOfBirth" id="childDateOfBirth">
-        </div>
-        <div>
-          <label for="childPIN">Rodné číslo</label>
-          <input type="text" name="childPIN" id="childPIN">
+          <label for="childPIN">Rodné číslo bez lomítka (12 číslic)</label>
+          <input type="number" name="childPIN" id="childPIN" min="7912310000" max="9916319999">
         </div>
         <div>
           <label for="childAddress">Bydliště dítěte</label>
@@ -57,7 +52,7 @@
         </div>
         <div>
           <label for="childZTPP">Číslo průkazu ZTP-P</label>
-          <input type="text" nsame="chilZTPP" id="childZTPP">
+          <input type="number" name="chilZTPP" id="childZTPP" min="80000000" max="9916319999">
         </div>
       </fieldset>
       <fieldset>

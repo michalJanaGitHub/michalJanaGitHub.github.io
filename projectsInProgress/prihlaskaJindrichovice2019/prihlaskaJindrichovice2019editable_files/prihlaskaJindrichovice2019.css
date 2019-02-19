@@ -83,7 +83,7 @@ form input[type=radio], form input[type=checkbox] {
 }
 textarea{
   width:100%;
-  min-height:2cm;
+  min-height:1cm;
   resize: vertical;
   font-size: 1em;
 }

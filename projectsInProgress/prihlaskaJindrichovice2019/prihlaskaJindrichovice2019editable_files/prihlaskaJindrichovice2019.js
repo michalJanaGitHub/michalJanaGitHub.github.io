@@ -42,7 +42,7 @@ function pageInit() {
   document.getElementById("legalRepTel").value = "732003551";
   document.getElementById("legalRepEmail").value = "anna.novakova@gmail.com";
   document.getElementById("legalRep2Name").value = "Josef Novák";
-  document.getElementById("legalRep2Relation").value = "Matka";
+  document.getElementById("legalRep2Relation").value = "Otec";
   document.getElementById("legalRep2Tel").value = "+421732003552";
   document.getElementById("legalRep2Email").value = "josef.novak@gmail.com";
 

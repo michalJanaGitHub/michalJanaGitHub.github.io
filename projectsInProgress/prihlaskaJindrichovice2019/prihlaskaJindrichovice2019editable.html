@@ -15,8 +15,7 @@
   <section>
     <h1>PŘIHLÁŠKA NA LETNÍ TÁBOR PRO DĚTI SE ZRAKOVÝM POSTIŽENÍM 12.-26.7 2019 v Jindřichovicích Pod Smrkem
     </h1>
-    <h4>Pořádá:<br>
-      Tyfloturistický oddíl, z.s., Bořivojova 774/65, 130 00, Praha Žižkov<br>
+    <h4>Pořádá: Tyfloturistický oddíl, z.s., Bořivojova 774/65, 130 00, Praha Žižkov<br>
 
     </h4>
     <form id="frmRegistration" onsubmit="return false">
@@ -124,18 +123,18 @@
         <div class="w100PerCent">
           <label for="eyeSightRadios"><span class="fs090em">4.1)</span> Jak je na tom vaše dítě se zrakem?
           </label>
-          <div id="eyeSightRadios" class="verticalElements">
-            <label><input type="radio" name="eyeSight" value="1" required>nosí brýle a vidí s nimi prakticky jako zdravý
+          <div id="howAboutEyeSightRadios" class="verticalElements">
+          <label><input type="radio" name="howAboutEyeSight" value="1" required>nosí brýle a vidí s nimi prakticky jako zdravý
               člověk</label>
-            <label><input type="radio" name="eyeSight" value="2">silně slabozraké, přečte hodně zvětšený
+            <label><input type="radio" name="howAboutEyeSight" value="2">silně slabozraké, přečte hodně zvětšený
               černotisk</label>
-            <label><input type="radio" name="eyeSight" value="3">je zcela nevidomé, nebo má zachovaný světlocit</label>
+            <label><input type="radio" name="howAboutEyeSight" value="3">je zcela nevidomé, nebo má zachovaný světlocit</label>
           </div>
         </div>
         <div class="w100PerCent">
           <label for="eyesightDetails"><span class="fs090em">4.2)</span> Jak se zrakové postižení projevuje u Vašeho
             dítěte funkčně? (např. šeroslepost, vidí zhruba na 2 metry, má omezené zorné pole, barvoslepost)</label>
-          <textarea name="eyesightDetails" id="eyesightDetails"></textarea>
+          <textarea name="eyesightDetails" id="eyesightDetails" required></textarea>
         </div>
         <div class="w33PerCent">
           <label for="canBraille"><span class="fs090em">4.3)</span> Umí dítě Braillovo písmo?</label>
@@ -162,18 +161,17 @@
           </div>
         </div>
         <div class="w100PerCent">
-          <label for="movementRestrictions"><span class="fs090em">4.6)</span> Má nějaká pohybová nebo režimová omezení v
+          <label for="movementRestrictionsEyeSight"><span class="fs090em">4.6)</span> Má nějaká pohybová nebo režimová omezení v
             souvislosti se zrakovou vadou? (pokud ano, uveďte také podrobnsti. Např.: Nesmí skákat kvůli glaukomu,riziku
             odchlípení sítnice apod.)</label>
-          <textarea name="movementRestrictions" id="movementRestrictions" minlength="2" required></textarea>
+          <textarea name="movementRestrictionsEyeSight" id="movementRestrictionsEyeSight" minlength="2" required></textarea>
         </div>
       </fieldset>
 
       <fieldset id="frmRegHealth">
         <legend><span class="fs090em">5)</span> Zdravotnická část</legend>
         <div class="w100PerCent">
-          <label for="allDrugs"><span class="fs090em">5.1)</span> Uveďte prosím všechny léky, které dítě užívá (název,
-            dávkování - např. "Euthyrox, 1
+          <label for="allDrugs"><span class="fs090em">5.1)</span> Užívá vaše dítě nějaké léky? (Pokud ano, uveďte podrobnosti - název, dávkování - např. "Euthyrox, 1
             tableta 100mg, ráno po jídle")
           </label>
           <textarea name="allDrugs" id="allDrugs"></textarea>

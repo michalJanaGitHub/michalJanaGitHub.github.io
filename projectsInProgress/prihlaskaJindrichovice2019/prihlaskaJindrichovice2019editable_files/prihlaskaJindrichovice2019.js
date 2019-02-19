@@ -70,6 +70,9 @@ function pageInit() {
 }
  
 function printForm() {
-  unHideElement("frmRegSignature")
+  unHideElement("frmRegSignature");
+  hideElement("frmRegCheckAndPrint");
   window.print();
+  unHideElement("frmRegCheckAndPrint");
+  hideElement("frmRegSignature");
 }

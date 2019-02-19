@@ -43,6 +43,10 @@ form fieldset div.w100PerCent {
   width: 100%;
 }
 
+form fieldset div.outerBorder {
+  border: 0.5mm solid var(--dark-grey);
+}
+
 form fieldset div.w50PerCent {
   display: inline-block;
   width: 49%;
@@ -52,9 +56,15 @@ form fieldset div.w33PerCent{
   width: 32.5%;
 }
 
-form fieldset > div {
+form fieldset div.w25PerCent{
   display: inline-block;
   width: 24.5%;
+}
+
+form fieldset > div {
+  text-align: top;
+  /* vertical-align:top; */
+  margin-bottom: 2mm;
 }
 
 form fieldset label {
@@ -66,7 +76,6 @@ form fieldset input {
 
 form input {
   width: 100%;
-  border: 10mm solid var(var(--dark-grey));
 }
 
 form input[type=radio], form input[type=checkbox] {
@@ -76,12 +85,9 @@ textarea{
   width:100%;
   min-height:2cm;
   resize: vertical;
-  font-size: 1cm;
+  font-size: 1em;
 }
 
-div.verticalElements {
-  border: 0.2mm solid var(--dark-grey);
-}
 div.verticalElements > label {
   display:block;
 }

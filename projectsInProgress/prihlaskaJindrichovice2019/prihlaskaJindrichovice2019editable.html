@@ -15,8 +15,8 @@
   <section>
     <h1>PŘIHLÁŠKA NA LETNÍ TÁBOR PRO DĚTI SE ZRAKOVÝM POSTIŽENÍM 12.-26.7 2019 v Jindřichovicích Pod Smrkem
     </h1>
-    <h4>Pořádá:</h4>
-    <h4>Tyfloturistický oddíl, z.s.<br>
+    <h4>Pořádá:<br>
+      Tyfloturistický oddíl, z.s.<br>
       Bořivojova 774/65<br>
       130 00<br>
       Praha Žižkov<br>
@@ -33,6 +33,8 @@
         </p>
         <p>Přihlášku nebude možné uložit. Ujistěte se, že je z vašeho prohlížeče možné tisknout alespoň do formátu pdf.
         </p>
+        <p>Prosím ujistěte se, že budete moci odpovědět na všechny otázky a že budete mít dostatek času na její vyplnění.
+        </p>
         <p>Vytištěnou přihlášku prosím uschovejte, abyste nás mohli před táborem jednoduše informovat o případných
           změnách.
         </p>
@@ -42,19 +44,19 @@
 
       <fieldset>
         <legend><span class="fs090em">2)</span> Obecné údaje o dítěti</legend>
-        <div>
+        <div class="w25PerCent">
           <label for="childName"><span class="fs090em">2.1)</span> Jméno dítěte</label>
           <input type="text" name="childName" id="childName" min-length="6" required>
         </div>
-        <div>
-          <label for="childPIN"><span class="fs090em">2.2)</span> Rodné číslo bez lomítka</label>
-          <input type="number" name="childPIN" id="childPIN" min="7912310000" max="9916319999" required>
+        <div class="w25PerCent">
+          <label for="childPIN"><span class="fs090em">2.2)</span> Rodné číslo</label>
+          <input name="childPIN" id="childPIN" pattern="[0-9]{6}\/[0-9]{4}" value="" type="text" title="Prosím zadejte rodné číslo bez lomítka - např. 091231/0001" required>
         </div>
-        <div>
+        <div class="w25PerCent">
           <label for="childInsuranceCompany"><span class="fs090em">2.3)</span> Zdravotní pojišťovna</label>
           <input type="text" name="childInsuranceCompany" id="childInsuranceCompany" required>
         </div>
-        <div>
+        <div class="w25PerCent">
           <label for="childZTPP"><span class="fs090em">2.4)</span> Číslo průk. ZTP-P (pokud má)</label>
           <input type="number" name="chilZTPP" id="childZTPP" min="80000000" max="9916319999">
         </div>
@@ -65,19 +67,19 @@
       </fieldset>
       <fieldset>
         <legend><span class="fs090em">3)</span> Kontaktní osoby</legend>
-        <div>
+        <div class="w100PerCent">
           <label for="legalRepName"><span class="fs090em">3.1)</span> Jméno zákonného zástupce</label>
           <input type="text" name="legalRepName" id="legalRepName" min-length="6" required>
         </div>
-        <div>
+        <div class="w33PerCent">
           <label for="legalRepRelation"><span class="fs090em">3.2)</span> Vztah k dítěti (matka, otec,…) </label>
           <input type="text" name="legalRepRelation" id="legalRepRelation" required>
         </div>
-        <div>
+        <div class="w33PerCent">
           <label for="legalRepTel"><span class="fs090em">3.3)</span> Telefonní číslo</label>
           <input type="tel" name="legalRepTel" id="legalRepTel" required>
         </div>
-        <div>
+        <div class="w33PerCent">
           <label for="legalRepEmail"><span class="fs090em">3.4)</span> e-mail</label>
           <input type="email" name="legalRepEmail" id="legalRepEmail" required>
         </div>
@@ -103,19 +105,19 @@
         </div>
 
 
-        <div>
+        <div class="w100PerCent">
           <label for="contact3Name"><span class="fs090em">3.9)</span> Jméno další kontaktní osoby(*)</label>
           <input type="text" name="legalRep3Name" id="legalRep3Name">
         </div>
-        <div>
+        <div class="w33PerCent">
           <label for="contact3Relation"><span class="fs090em">3.10)</span> Vztah k dítěti</label>
           <input type="text" name="legalRep3Relation" id="legalRep3Relation">
         </div>
-        <div>
+        <div class="w33PerCent">
           <label for="contact3Tel"><span class="fs090em">3.11)</span> Telefonní číslo</label>
           <input type="tel" name="legalRep3Tel" id="legalRep3Tel">
         </div>
-        <div>
+        <div class="w33PerCent">
           <label for="contact3Email"><span class="fs090em">3.12)</span> e-mail</label>
           <input type="email" name="contact3Email" id="contact3Email">
         </div>
@@ -167,8 +169,8 @@
         </div>
         <div class="w100PerCent">
           <label for="movementRestrictions"><span class="fs090em">4.6)</span> Má nějaká pohybová nebo režimová omezení v
-            souvislosti se zrakovou vadou? (pokud ano, uveďte také podrobnsti. Např.: Nesmí skákat kvůli glaukomu,
-            riziku odchlípení sítnice apod.)</label>
+            souvislosti se zrakovou vadou? (pokud ano, uveďte také podrobnsti. Např.: Nesmí skákat kvůli glaukomu,riziku
+            odchlípení sítnice apod.)</label>
           <textarea name="movementRestrictions" id="movementRestrictions" min-length="2" required></textarea>
         </div>
       </fieldset>
@@ -182,7 +184,7 @@
           </label>
           <textarea name="allDrugs" id="allDrugs"></textarea>
         </div>
-        <div class="w50PerCent">
+        <div class="w100PerCent">
           <label for="alergiesCheckboxes"><span class="fs090em">5.2)</span> Prosím zaškrtněte, pokud trpí alergií na
             něco
             z uvedeného:</label>
@@ -196,7 +198,7 @@
           </div>
         </div>
 
-        <div class="w50PerCent">
+        <div class="w100PerCent">
           <label for="otherAllergiesDetails"><span class="fs090em">5.3)</span> Má ještě jiné alergie? (pokud ano, uveďte
             také podrobnosti)</label>
           <textarea name="otherAllergiesDetails" id="otherAllergiesDetails" required></textarea>
@@ -209,7 +211,7 @@
           <textarea name="foodAllergiesDetails" id="foodAllergiesDetails"></textarea>
         </div>
 
-        <div class="w50PerCent">
+        <div class="w100PerCent">
           <label for="ilnessesCheckboxes"><span class="fs090em">5.5)</span> Prosím zaškrtněte, pokud dítě trpí některým
             z následujících
             onemocnění:</label>
@@ -223,7 +225,7 @@
           </div>
         </div>
 
-        <div class="w50PerCent">
+        <div class="w100PerCent">
           <label for="epilepsyDetails"><span class="fs090em">5.6)</span> Pokud mívá Vaše dítě epileptické záchvaty,
             napište prosím, jak často je mívá, kdy jej mělo naposledy a zda má nařízená nějaká související režimová
             opatření:</label>
@@ -231,123 +233,100 @@
         </div>
 
         <div>
-          <label for="otherIllnesses"><span class="fs090em">5.7)</span> Má dítě jiná chronická onemocnění? (pokud ano, uveďte také podrobnosti)</label>   
-            <textarea name="otherIllnesses" id="otherIllnesses"></textarea>
+          <label for="otherIllnesses"><span class="fs090em">5.7)</span> Má dítě jiná chronická onemocnění? (pokud ano,
+            uveďte také podrobnosti)</label>
+          <textarea name="otherIllnesses" id="otherIllnesses"></textarea>
         </div>
 
-
         <div>
-          <label for="otherLimmitationsRadios"><span class="fs090em">5.8)</span> Má Vaše dítě nějaká pohybová nebo
+          <label for="otherLimmitationsDetails"><span class="fs090em">5.8)</span> Má Vaše dítě nějaká pohybová nebo
             režimová omezení? (např. nesmí skákat kvůli glaukomu, riziku odchlípení sítnice apod.)</label>
-          <div id="otherLimmitationsRadios">
-            <label><input type="radio" name="otherLimmitations" value="no">ne</label>
-            <label><input type="radio" name="otherLimmitations" value="yes">ano (uveďte podobnosti)</label>
-            <textarea name="otherLimmitationsDetails" id="otherLimmitationsDetails"></textarea>
-          </div>
+          <textarea name="otherLimmitationsDetails" id="otherLimmitationsDetails"></textarea>
         </div>
 
-
         <div>
-          <label for="somethingElseToKnowRadios"><span class="fs090em">5.9)</span> Je ještě něco, co bychom měli o vašem
-            dítěti vědět? (např. často
-            omdlévá, má problémy s chůzí na dlouhé vzdálenosti, atp.)
+          <label for="somethingElseToKnowDetails"><span class="fs090em">5.9)</span> Je ještě něco, co bychom měli o vašem dítěti vědět? (Pokud ano, uveďte i podrobnosti - např.: Často omdlévá, má problémy s chůzí na dlouhé vzdálenosti, atp.)
           </label>
-          <div id="somethingElseToKnowRadios">
-            <label><input type="radio" name="somethingElseToKnow" value="no">ne</label>
-            <label><input type="radio" name="somethingElseToKnow" value="yes">ano (uveďte podobnosti)</label>
             <textarea name="somethingElseToKnowDetails" id="somethingElseToKnowDetails"></textarea>
           </div>
         </div>
 
-
         <div class="w100PerCent">
-          <label for="doctorContact"><span class="fs090em">5.10)</span> Kontakt na praktického lékaře (výjimečně, když
-            se něco děje, lékaři, je-li to
-            možné, využijí možnosti kontaktovat své kolegy pro konzultaci, zvlášť u našich dětí, které mohou mít různá
-            ne právě obvyklá postižení, či kombinace zdravotních potíží)
+          <label for="doctorContact"><span class="fs090em">5.10)</span> Kontakt na praktického lékaře (výjimečně, když se něco děje, lékaři, je-li to možné, využijí možnosti kontaktovat své kolegy pro konzultaci, zvlášť u našich dětí, které mohou mít různá ne právě obvyklá postižení, či kombinace zdravotních potíží)
           </label>
           <input type="text" name="doctorContact" id="doctorContact">
         </div>
       </fieldset>
 
       <fieldset>
-        <legend>Doplňující informace o dítěti</legend>
-        <div>
-          <label for="bedWettingRadios">Pomočuje se dítě v noci?</label>
+        <legend><span class="fs090em">6)</span> Doplňující informace o dítěti</legend>
+        <div class="w50PerCent">
+          <label for="bedWettingRadios"><span class="fs090em">6.1)</span> Pomočuje se dítě v noci?</label>
+          <div id="bedWettingRadios" class="verticalElements">
+            <label><input type="radio" name="bedWetting" value="yes" required>ano</label>
+            <label><input type="radio" name="bedWetting" value="no">ne</label>
+            <label><input type="radio" name="bedWetting" value="sometimes">občas</label>
+          </div>
         </div>
-        <div id="bedWettingRadios">
-          <label><input type="radio" name="bedWetting" value="yes">ano</label>
-          <label><input type="radio" name="bedWetting" value="no">ne</label>
-          <label><input type="radio" name="bedWetting" value="sometimes">občas</label>
+        <div class="w50PerCent">
+          <label for="canSleepInBunkBedRadios"><span class="fs090em">6.2)</span> Může spát na patrovém lůžku?</label>
+          <div id="canSleepInBunkBedRadios" class="verticalElements">
+            <label><input type="radio" name="canSleepInBunkBed" value="yes" required>ano</label>
+            <label><input type="radio" name="canSleepInBunkBed" value="no">ne</label>
+          </div>
         </div>
-        <div>
-          <label for="canSleepInBunkBedRadios">Může spát na patrovém lůžku?</label>
-        </div>
-        <div id="canSleepInBunkBedRadios">
-          <label><input type="radio" name="canSleepInBunkBed" value="yes">ano</label>
-          <label><input type="radio" name="canSleepInBunkBed" value="no">ne</label>
-        </div>
-        <div>
-          <label for="canSwimRadios">Umí dítě plavat?</label>
-        </div>
-        <div id="canSwimRadios">
-          <label><input type="radio" name="canSwim" value="canSwim">plave samostatně</label>
+        <div class="w50PerCent">
+          <label for="canSwimRadios"><span class="fs090em">6.3)</span> Umí dítě plavat?</label>
+        <div id="canSwimRadios" class="verticalElements">
+          <label><input type="radio" name="canSwim" value="canSwim" required>plave samostatně</label>
           <label><input type="radio" name="canSwim" value="canSwimWithAid">plave s pomůckami(rukávky, pěnový pás - pokud
             ano, musí je mít s sebou) </label>
           <label><input type="radio" name="canSwim" value="canNotSwim">neplave</label>
         </div>
+      </div>
 
-        <div>
-          <label for="nightBattleGameRadios">Může se účastnit noční bojové hry? (např kvůli epilepsii)</label>
-        </div>
-        <div id="nightBattleGameRadios">
-          <label><input type="radio" name="nightBattleGame" value="yes">ano</label>
-          <label><input type="radio" name="nightBattleGame" value="no">ne</label>
+        <div class="w50PerCent">
+          <label for="nightBattleGameRadios"><span class="fs090em">6.4)</span> Může se účastnit noční bojové hry? (např kvůli epilepsii)</label>
+          <div id="nightBattleGameRadios" class="verticalElements">
+            <label><input type="radio" name="nightBattleGame" value="yes" required>ano</label>
+            <label><input type="radio" name="nightBattleGame" value="no">ne</label>
+          </div>
         </div>
 
-        <div>
-          <label for="childCharacteristics">Prosím charakterizujte vaše dítě (např.: "Honzík je veselý klučík, který
-            zpočátku bývá stydlivý, má strach, že si na táboře nenajde kamarády. Moc ho baví lesnictví atd..." nebo:
-            "Anička je chytrá holka a má ráda koně, atd...")</label>
+        <div class="w100PerCent">
+          <label for="childCharacteristics"><span class="fs090em">6.5)</span> Prosím charakterizujte vaše dítě (např.: "Honzík je veselý klučík, který zpočátku bývá stydlivý, má strach, že si na táboře nenajde kamarády. Moc ho baví lesnictví atd..." nebo: "Anička je chytrá holka a má ráda koně, atd...")</label>
           <textarea name="childCharacteristics" id="childCharacteristics"></textarea>
         </div>
       </fieldset>
 
       <fieldset>
-        <legend>GDPR</legend>
+        <legend><span class="fs090em">7)</span> GDPR</legend>
         <div>
-          <label for="publishConsentRadios">Souhlas s pořizováním fotografií/videí</label>
-        </div>
+          <label for="publishConsentRadios"><span class="fs090em">7.1)</span> Souhlas s pořizováním fotografií/videí</label>
         <div id="publishConsentRadios" class="verticalElements">
-          <label><input type="radio" name="publishConsent" value="yes">Souhlasím s tím, aby fotografie nebo videa, na
-            kterých je zachycen(a) můj syn/ má dcera/ můj svěřenec na akcích pořádaných Tyfloturistickým oddílem, z.s.,
-            byly uveřejňovány na webových či facebookových stránkách tohoto spolku a byly případně použity pro účely
-            propagace činnosti spolku.</label>
-          <label><input type="radio" name="publishConsent" value="no">Nesouhlasím s tím, aby fotografie nebo videa, na
-            kterých je zachycen(a) můj syn/ má dcera/ můj svěřenec na akcích pořádaných Tyfloturistickým oddílem, z.s.,
-            byly uveřejňovány na webových či facebookových stránkách tohoto spolku a byly případně použity pro účely
-            propagace činnosti spolku.</label>
+          <label><input type="radio" name="publishConsent" value="yes">Souhlasím s tím, aby fotografie nebo videa, na kterých je zachycen(a) můj syn/ má dcera/ můj svěřenec na akcích pořádaných Tyfloturistickým oddílem, z.s., byly uveřejňovány na webových či facebookových stránkách tohoto spolku a byly případně použity pro účely propagace činnosti spolku.</label>
+          <label><input type="radio" name="publishConsent" value="no">Nesouhlasím s tím, aby fotografie nebo videa, na kterých je zachycen(a) můj syn/ má dcera/ můj svěřenec na akcích pořádaných Tyfloturistickým oddílem, z.s., byly uveřejňovány na webových či facebookových stránkách tohoto spolku a byly případně použity pro účely propagace činnosti spolku.</label>
         </div>
+      </div>
+
 
         <div>
-          <label for="tagConsentRadios">Souhlas s označením fotek/videí</label>
+          <label for="tagConsentRadios"><span class="fs090em">7.2)</span> Souhlas s označením fotek/videí</label>
         </div>
         <div id="tagConsentRadios" class="verticalElements">
-          <label><input type="radio" name="tagConsent" value="yes">Souhlasím s tím, aby v popiscích fotografií nebo
-            videí bylo uvedeno i jméno mého syna/svěřence/mé dcery.</label>
-          <label><input type="radio" name="tagConsent" value="no">Nesouhlasím s tím, aby v popiscích fotografií nebo
-            videí bylo uvedeno i jméno mého syna/svěřence/mé dcery.</label>
+          <label><input type="radio" name="tagConsent" value="yes">Souhlasím s tím, aby v popiscích fotografií nebo videí bylo uvedeno i jméno mého syna/svěřence/mé dcery.</label>
+          <label><input type="radio" name="tagConsent" value="no">Nesouhlasím s tím, aby v popiscích fotografií nebo videí bylo uvedeno i jméno mého syna/svěřence/mé dcery.</label>
         </div>
       </fieldset>
 
       <fieldset>
-        <legend>Odeslání přihlášky</legend>
+        <legend><span class="fs090em">8)</span> Odeslání přihlášky</legend>
         <input type="submit" value="Zkontrolovat a vytisknout přihlášku">
         <!-- <input type="button" val="Vyčistit formulář pro zadání dalšího dítěte"> -->
       </fieldset>
 
       <fieldset>
-        <legend>Podpis</legend>
+        <legend><span class="fs090em">9)</span> Podpis</legend>
         <br>
         <p>
           Tímto závazně přihlašuji své dítě na letní tábor Jindřichovice 2019

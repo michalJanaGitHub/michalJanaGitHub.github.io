@@ -2,7 +2,7 @@
 let stateCheck = setInterval(() => {
   if(document.readyState ==='complete'){
     pageInit();
-    createTestingVersion();
+    // createTestingVersion();
     document.querySelector('#frmRegistration').addEventListener('submit', printForm);
     clearInterval(stateCheck);
   }

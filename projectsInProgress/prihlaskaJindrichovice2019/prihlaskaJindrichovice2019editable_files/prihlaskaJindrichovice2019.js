@@ -53,15 +53,30 @@ function pageInit() {
   document.getElementById("eyesightDetails").value = "bez brýlí toho moc nevidí";
   document.getElementById("movementRestrictionsEyeSight").value = "ne";
   
-  document.getElementById("legalRep2Email").value = "josef.novak@gmail.com";
-  
+  document.getElementById("allDrugs").value = "ne";
+  document.getElementById("otherAllergiesDetails").value = "ne";
+  document.getElementById("foodAllergiesDetails").value = "ne";  
+  document.getElementById("otherIllnesses").value = "ne";
+  document.getElementById("otherLimmitationsDetails").value = "ne";
+  document.getElementById("somethingElseToKnowDetails").value = "ne";
+  document.getElementById("otherLimmitationsDetails").value = "ne";
+  document.getElementById("doctorContact").value = "Mudr. Jiří Novák, 987 777 554, Havířov";
+
+  document.getElementsByName("bedWetting")[0].checked = true;  
+  document.getElementsByName("canSleepInBunkBed")[0].checked = true;
+  document.getElementsByName("canSwim")[0].checked = true;
+  document.getElementsByName("nightBattleGame")[0].checked = true;
+  document.getElementById("childCharacteristics").value = "Nedáme sem nějaký minimální počet znaků? :)"
+
+  document.getElementsByName("gdprCanPublish")[0].checked = true;  
+  document.getElementsByName("gdprCanTag")[0].checked = true;
   
   // removeElement("frmRegChildPersonalData");   
   // removeElement("frmRegContactPersons");
   // removeElement("frmRegEyeSight");
-  removeElement("frmRegHealth");
-  removeElement("frmRegGDPR");
-  removeElement("frmRegAdditionalInfo");
+  // removeElement("frmRegHealth");
+  // removeElement("frmRegAdditionalInfo");
+  // removeElement("frmRegGDPR");
   hideElement("frmRegSignature");
 
   

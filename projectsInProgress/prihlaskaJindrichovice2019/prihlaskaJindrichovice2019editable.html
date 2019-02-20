@@ -13,6 +13,7 @@
 
 <body>
   <section>
+    <h4>  TESTOVACÍ VERZE !!!<br>
     <h1>PŘIHLÁŠKA NA LETNÍ TÁBOR PRO DĚTI SE ZRAKOVÝM POSTIŽENÍM 12.-26.7 2019 v Jindřichovicích Pod Smrkem
     </h1>
     <h4>Pořádá: Tyfloturistický oddíl, z.s., Bořivojova 774/65, 130 00, Praha Žižkov<br>
@@ -174,7 +175,7 @@
           <label for="allDrugs"><span class="fs090em">5.1)</span> Užívá vaše dítě nějaké léky? (Pokud ano, uveďte podrobnosti - název, dávkování - např. "Euthyrox, 1
             tableta 100mg, ráno po jídle")
           </label>
-          <textarea name="allDrugs" id="allDrugs"></textarea>
+          <textarea name="allDrugs" id="allDrugs" minlength="2" required></textarea>
         </div>
         <div class="w100PerCent">
           <label for="alergiesCheckboxes"><span class="fs090em">5.2)</span> Prosím zaškrtněte, pokud trpí alergií na
@@ -192,12 +193,12 @@
         <div class="w100PerCent">
           <label for="otherAllergiesDetails"><span class="fs090em">5.3)</span> Má ještě jiné alergie? (pokud ano, uveďte
             také podrobnosti)</label>
-          <textarea name="otherAllergiesDetails" id="otherAllergiesDetails" required></textarea>
+          <textarea name="otherAllergiesDetails" id="otherAllergiesDetails" minlength="2" required></textarea>
         </div>
         <div class="w100PerCent">
           <label for="foodAllergiesRadios"><span class="fs090em">5.4)</span> Má Vaše dítě zakázané ze zdravotních důvodů
             některé potraviny? (Např.: Bezlepková dieta)</label>
-          <textarea name="foodAllergiesDetails" id="foodAllergiesDetails"></textarea>
+          <textarea name="foodAllergiesDetails" id="foodAllergiesDetails" minlength="2" required></textarea>
         </div>
         <div class="w100PerCent">
           <label for="ilnessesCheckboxes"><span class="fs090em">5.5)</span> Prosím zaškrtněte, pokud dítě trpí některým
@@ -221,19 +222,19 @@
         <div>
           <label for="otherIllnesses"><span class="fs090em">5.7)</span> Má dítě jiná chronická onemocnění? (pokud ano,
             uveďte také podrobnosti)</label>
-          <textarea name="otherIllnesses" id="otherIllnesses"></textarea>
+          <textarea name="otherIllnesses" id="otherIllnesses" minlength="2" required></textarea>
         </div>
         <div>
           <label for="otherLimmitationsDetails"><span class="fs090em">5.8)</span> Má Vaše dítě nějaká pohybová nebo
             režimová omezení? (např. nesmí skákat kvůli glaukomu, riziku odchlípení sítnice apod.)</label>
-          <textarea name="otherLimmitationsDetails" id="otherLimmitationsDetails"></textarea>
+          <textarea name="otherLimmitationsDetails" id="otherLimmitationsDetails" minlength="2" required></textarea>
         </div>
         <div>
           <label for="somethingElseToKnowDetails"><span class="fs090em">5.9)</span> Je ještě něco, co bychom měli o
             vašem dítěti vědět? (Pokud ano, uveďte i podrobnosti - např.: Často omdlévá, má problémy s chůzí na dlouhé
             vzdálenosti, atp.)
           </label>
-          <textarea name="somethingElseToKnowDetails" id="somethingElseToKnowDetails"></textarea>
+          <textarea name="somethingElseToKnowDetails" id="somethingElseToKnowDetails" minlength="2" required></textarea>
         </div>
         </div>
         <div class="w100PerCent">
@@ -241,7 +242,7 @@
             se něco děje, lékaři, je-li to možné, využijí možnosti kontaktovat své kolegy pro konzultaci, zvlášť u
             našich dětí, které mohou mít různá ne právě obvyklá postižení, či kombinace zdravotních potíží)
           </label>
-          <input type="text" name="doctorContact" id="doctorContact">
+          <input type="text" name="doctorContact" id="doctorContact" minlength="25" required>
         </div>
       </fieldset>
 
@@ -269,7 +270,7 @@
             <label><input type="radio" name="canSwim" value="canSwimWithAid">plave s pomůckami(rukávky, pěnový pás -
               pokud
               ano, musí je mít s sebou) </label>
-            <label><input type="radio" name="canSwim" value="canNotSwim">neplave</label>
+            <label><input type="radio" name="canSwim" value="canNotSwim" required>neplave</label>
           </div>
         </div>
         <div class="w50PerCent">
@@ -284,32 +285,32 @@
           <label for="childCharacteristics"><span class="fs090em">6.5)</span> Prosím charakterizujte vaše dítě (např.:
             "Honzík je veselý klučík, který zpočátku bývá stydlivý, má strach, že si na táboře nenajde kamarády. Moc ho
             baví lesnictví atd..." nebo: "Anička je chytrá holka a má ráda koně, atd...")</label>
-          <textarea name="childCharacteristics" id="childCharacteristics"></textarea>
+          <textarea name="childCharacteristics" id="childCharacteristics" minlength=20 required></textarea>
         </div>
       </fieldset>
 
       <fieldset id="frmRegGDPR">
         <legend><span class="fs090em">7)</span> GDPR</legend>
         <div>
-          <label for="publishConsentRadios"><span class="fs090em">7.1)</span> Souhlas s pořizováním
+          <label for="gdprCanPublishRadios"><span class="fs090em">7.1)</span> Souhlas s pořizováním
             fotografií/videí</label>
-          <div id="publishConsentRadios" class="verticalElements">
-            <label><input type="radio" name="publishConsent" value="yes">Souhlasím s tím, aby fotografie nebo videa, na
+          <div id="gdprCanPublishRadios" class="verticalElements">
+            <label><input type="radio" name="gdprCanPublish" value="yes" required>Souhlasím s tím, aby fotografie nebo videa, na
               kterých je zachycen(a) můj syn/ má dcera/ můj svěřenec na akcích pořádaných Tyfloturistickým oddílem,
               z.s., byly uveřejňovány na webových či facebookových stránkách tohoto spolku a byly případně použity pro
               účely propagace činnosti spolku.</label>
-            <label><input type="radio" name="publishConsent" value="no">Nesouhlasím s tím, aby fotografie nebo videa, na
+            <label><input type="radio" name="gdprCanPublish" value="no">Nesouhlasím s tím, aby fotografie nebo videa, na
               kterých je zachycen(a) můj syn/ má dcera/ můj svěřenec na akcích pořádaných Tyfloturistickým oddílem,
               z.s., byly uveřejňovány na webových či facebookových stránkách tohoto spolku a byly případně použity pro
               účely propagace činnosti spolku.</label>
           </div>
         </div>
         <div>
-          <label for="tagConsentRadios"><span class="fs090em">7.2)</span> Souhlas s označením fotek/videí</label>
-          <div id="tagConsentRadios" class="verticalElements">
-            <label><input type="radio" name="tagConsent" value="yes">Souhlasím s tím, aby v popiscích fotografií nebo
+          <label for="gdprCanTagRadios"><span class="fs090em">7.2)</span> Souhlas s označením fotek/videí</label>
+          <div id="gdprCanTagRadios" class="verticalElements">
+            <label><input type="radio" name="gdprCanTag" value="yes" required>Souhlasím s tím, aby v popiscích fotografií nebo
               videí bylo uvedeno i jméno mého syna/svěřence/mé dcery.</label>
-            <label><input type="radio" name="tagConsent" value="no">Nesouhlasím s tím, aby v popiscích fotografií nebo
+            <label><input type="radio" name="gdprCanTag" value="no">Nesouhlasím s tím, aby v popiscích fotografií nebo
               videí bylo uvedeno i jméno mého syna/svěřence/mé dcery.</label>
           </div>
         </div>
@@ -347,7 +348,11 @@
 
     </form>
   </section>
-
+  <section>
+    <p> </p>
+    <p> </p>
+    <p> </p>
+  </section>
 
 </body>
 

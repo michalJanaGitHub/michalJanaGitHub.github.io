@@ -13,7 +13,6 @@
 
 <body>
   <section>
-    <h4>  TESTOVACÍ VERZE !!!<br>
     <h1>PŘIHLÁŠKA NA LETNÍ TÁBOR PRO DĚTI SE ZRAKOVÝM POSTIŽENÍM 12.-26.7 2019 v Jindřichovicích Pod Smrkem
     </h1>
     <h4>Pořádá: Tyfloturistický oddíl, z.s., Bořivojova 774/65, 130 00, Praha Žižkov<br>
@@ -40,25 +39,25 @@
         </p>
       </fieldset>
 
-      <fieldset id="frmRegChildPersonalData">
+      <fieldset id="frmRegChildPersonalData" class="avoidPageBreakInside">
         <legend><span class="fs090em">2)</span> Obecné údaje o dítěti</legend>
-        <div class="w33PerCent">
+        <div class="w50PerCent">
           <label for="childName"><span class="fs090em">2.1)</span> Jméno dítěte</label>
           <input type="text" name="childName" id="childName" minlength="6" title="Jméno je přiliš krátké" required>
         </div>
-        <div class="w33PerCent">
+        <div class="w25PerCent">
           <label for="childPIN"><span class="fs090em">2.2)</span> Rodné číslo</label>
           <input name="childPIN" id="childPIN" pattern="[0-9]{6}\/[0-9]{4}" value="" type="text"
             title="Prosím zadejte rodné číslo bez lomítka - např. 091231/0001" required>
         </div>
-        <div class="w33PerCent">
+        <div class="w25PerCent">
+          <label for="childZTPP"><span class="fs090em">2.4)</span> Číslo ZTP-P (má-li)</label>
+          <input type="number" name="chilZTPP" id="childZTPP">
+        </div>
+        <div class="w50PerCent">
           <label for="childInsuranceCompany"><span class="fs090em">2.3)</span> Zdravotní pojišťovna</label>
           <input type="text" name="childInsuranceCompany" id="childInsuranceCompany" minlength="6"
             title="Název je přiliš krátký" required>
-        </div>
-        <div class="w50PerCent">
-          <label for="childZTPP"><span class="fs090em">2.4)</span> Číslo pr. ZTP-P (pokud má)</label>
-          <input type="number" name="chilZTPP" id="childZTPP">
         </div>
         <div class="w50PerCent">
           <label for="childAddress"><span class="fs090em">2.5)</span> Adresa bydliště</label>
@@ -66,21 +65,21 @@
         </div>
       </fieldset>
 
-      <fieldset id="frmRegContactPersons">
+      <fieldset id="frmRegContactPersons" class="avoidPageBreakInside">
         <legend><span class="fs090em">3)</span> Kontaktní osoby</legend>
-        <div class="w100PerCent">
+        <div class="w50PerCent">
           <label for="legalRepName"><span class="fs090em">3.1)</span> Jméno zákonného zástupce</label>
           <input type="text" name="legalRepName" id="legalRepName" min-length="6" required>
         </div>
-        <div class="w33PerCent">
+        <div class="w50PerCent">
           <label for="legalRepRelation"><span class="fs090em">3.2)</span> Vztah k dítěti (matka, otec,…) </label>
           <input type="text" name="legalRepRelation" id="legalRepRelation" required>
         </div>
-        <div class="w33PerCent">
+        <div class="w50PerCent">
           <label for="legalRepTel"><span class="fs090em">3.3)</span> Telefonní číslo</label>
           <input type="text" name="legalRepTel" id="legalRepTel" pattern="^(\+?\d+){9,}$" required>
         </div>
-        <div class="w33PerCent">
+        <div class="w50PerCent">
           <label for="legalRepEmail"><span class="fs090em">3.4)</span> e-mail</label>
           <input type="email" name="legalRepEmail" id="legalRepEmail" required>
         </div>
@@ -89,31 +88,31 @@
             vyplňte údaje jiné blízké osoby, kterou bude možné v době tábora v případě potřeby kontaktovat)</label>
           <input type="text" name="legalRep2Name" id="legalRep2Name" min-length="6" required>
         </div>
-        <div class="w33PerCent">
-          <label for="legalRep2Relation"><span class="fs090em">3.6)</span> Vztah k dítěti (matka, otec,…) </label>
+        <div class="w25PerCent">
+          <label for="legalRep2Relation"><span class="fs090em">3.6)</span> Vztah k dítěti</label>
           <input type="text" name="legalRep2Relation" id="legalRep2Relation" required>
         </div>
-        <div class="w33PerCent">
+        <div class="w25PerCent">
           <label for="legalRep2Tel"><span class="fs090em">3.7)</span> Telefonní číslo</label>
           <input type="text" name="legalRep2Tel" id="legalRep2Tel" pattern="^(\+?\d+){9,}$" required>
         </div>
-        <div class="w33PerCent">
+        <div class="w50PerCent">
           <label for="legalRep2Email"><span class="fs090em">3.8)</span> e-mail</label>
           <input type="email" name="legalRep2Email" id="legalRep2Email" required>
         </div>
-        <div class="w100PerCent">
+        <div class="w50PerCent">
           <label for="contact3Name"><span class="fs090em">3.9)</span> Jméno další kontaktní osoby (nepovinné)</label>
           <input type="text" name="legalRep3Name" id="legalRep3Name">
         </div>
-        <div class="w33PerCent">
+        <div class="w25PerCent">
           <label for="contact3Relation"><span class="fs090em">3.10)</span> Vztah k dítěti</label>
           <input type="text" name="legalRep3Relation" id="legalRep3Relation">
         </div>
-        <div class="w33PerCent">
+        <div class="w25PerCent">
           <label for="contact3Tel"><span class="fs090em">3.11)</span> Telefonní číslo</label>
           <input type="tel" name="legalRep3Tel" id="legalRep3Tel">
         </div>
-        <div class="w33PerCent">
+        <div class="w50PerCent">
           <label for="contact3Email"><span class="fs090em">3.12)</span> e-mail</label>
           <input type="email" name="contact3Email" id="contact3Email">
         </div>
@@ -236,7 +235,6 @@
           </label>
           <textarea name="somethingElseToKnowDetails" id="somethingElseToKnowDetails" minlength="2" required></textarea>
         </div>
-        </div>
         <div class="w100PerCent">
           <label for="doctorContact"><span class="fs090em">5.10)</span> Kontakt na praktického lékaře (výjimečně, když
             se něco děje, lékaři, je-li to možné, využijí možnosti kontaktovat své kolegy pro konzultaci, zvlášť u
@@ -246,7 +244,7 @@
         </div>
       </fieldset>
 
-      <fieldset id="frmRegAdditionalInfo">
+      <fieldset id="frmRegAdditionalInfo"class="avoidPageBreakInside">
         <legend><span class="fs090em">6)</span> Doplňující informace o dítěti</legend>
         <div class="w50PerCent">
           <label for="bedWettingRadios"><span class="fs090em">6.1)</span> Pomočuje se dítě v noci?</label>
@@ -285,11 +283,11 @@
           <label for="childCharacteristics"><span class="fs090em">6.5)</span> Prosím charakterizujte vaše dítě (např.:
             "Honzík je veselý klučík, který zpočátku bývá stydlivý, má strach, že si na táboře nenajde kamarády. Moc ho
             baví lesnictví atd..." nebo: "Anička je chytrá holka a má ráda koně, atd...")</label>
-          <textarea name="childCharacteristics" id="childCharacteristics" minlength=20 required></textarea>
+          <textarea name="childCharacteristics" id="childCharacteristics" minlength=6 required></textarea>
         </div>
       </fieldset>
 
-      <fieldset id="frmRegGDPR">
+      <fieldset id="frmRegGDPR" class="avoidPageBreakInside">
         <legend><span class="fs090em">7)</span> GDPR</legend>
         <div>
           <label for="gdprCanPublishRadios"><span class="fs090em">7.1)</span> Souhlas s pořizováním
@@ -323,7 +321,7 @@
         <!-- <input type="button" val="Vyčistit formulář pro zadání dalšího dítěte"> -->
       </fieldset>
 
-      <fieldset id="frmRegSignature">
+      <fieldset id="frmRegSignature" class="avoidPageBreakInside">
         <legend><span class="fs090em">9)</span> Podpis</legend>
         <br>
         <p>
@@ -331,7 +329,7 @@
         </p>
         <p>
           Prohlašuji, že výše uvedné informace jsou pravdivé a zavazuji se hlavní vedoucí před začátkem tábora
-          informovat o případné změnách.
+          informovat o případných změnách.
         </p>
         <p>
           Prohlašuji, že dítě je způsobilé k absolvování letního tábora pro zrakově handikepované. (V případě

@@ -1,9 +1,10 @@
 //check if document is ready
 let stateCheck = setInterval(() => {
   if(document.readyState ==='complete'){
-      pageInit();
-      document.querySelector('#frmRegistration').addEventListener('submit', printForm);
-      clearInterval(stateCheck);
+    pageInit();
+    createTestingVersion();
+    document.querySelector('#frmRegistration').addEventListener('submit', printForm);
+    clearInterval(stateCheck);
   }
 }, 100);
 
@@ -30,8 +31,20 @@ else
     document.getElementById(id).style.display = 'block';
 }
 
-//add submit event listener to form
+
 function pageInit() {
+  hideElement("frmRegSignature"); 
+}
+
+
+function createTestingVersion() {
+
+  var el = document.getElementsByTagName('h1')[0],
+    elChild = document.createElement('h4');
+  elChild.innerHTML = 'TESTOVACÍ VERZE !!!';
+  // Prepend it
+  el.insertBefore(elChild, el.firstChild);
+
   document.getElementById("childName").value = "Anička Nováková";
   document.getElementById("childPIN").value = "080512/1234";
   document.getElementById("childInsuranceCompany").value = "Hasičská zdravotní pojišťovna";
@@ -66,7 +79,7 @@ function pageInit() {
   document.getElementsByName("canSleepInBunkBed")[0].checked = true;
   document.getElementsByName("canSwim")[0].checked = true;
   document.getElementsByName("nightBattleGame")[0].checked = true;
-  document.getElementById("childCharacteristics").value = "Nedáme sem nějaký minimální počet znaků? :)"
+  document.getElementById("childCharacteristics").value = "Anička je super"
 
   document.getElementsByName("gdprCanPublish")[0].checked = true;  
   document.getElementsByName("gdprCanTag")[0].checked = true;
@@ -77,9 +90,7 @@ function pageInit() {
   // removeElement("frmRegHealth");
   // removeElement("frmRegAdditionalInfo");
   // removeElement("frmRegGDPR");
-  hideElement("frmRegSignature");
-
-  
+  // removeElement("frmRegSignature");
 
   // document.querySelector('#frmRegistration').addEventListener('submit', validateForm);
 }

@@ -31,7 +31,7 @@ form fieldset {
   margin-bottom: var(--default-space);
 }
 form fieldset legend{
-  font-size: 1em;
+  /* font-size: 1em; */
   color: var(--title-color);
   background: var(--form-background);
   font-weight: bold;
@@ -82,11 +82,15 @@ form input {
 form input[type=radio], form input[type=checkbox] {
   width:auto
 }
+
+input, label, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
 textarea{
   width:100%;
   min-height:1cm;
   resize: vertical;
-  font-size: 0.9rem;
 }
 
 div.verticalElements > label {
@@ -99,4 +103,8 @@ input[type=submit], input[type=button]{
 
 span.fs090em {
   font-size: 0.9em
+}
+
+fieldset >div, .avoidPageBreakInside {
+    page-break-inside: avoid;
 }

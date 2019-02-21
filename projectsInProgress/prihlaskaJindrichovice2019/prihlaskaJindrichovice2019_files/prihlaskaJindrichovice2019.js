@@ -70,9 +70,7 @@ function createTestingVersion() {
   document.getElementById("otherAllergiesDetails").value = "ne";
   document.getElementById("foodAllergiesDetails").value = "ne";  
   document.getElementById("otherIllnesses").value = "ne";
-  document.getElementById("otherLimmitationsDetails").value = "ne";
   document.getElementById("somethingElseToKnowDetails").value = "ne";
-  document.getElementById("otherLimmitationsDetails").value = "ne";
   document.getElementById("doctorContact").value = "Mudr. Jiří Novák, 987 777 554, Havířov";
 
   document.getElementsByName("bedWetting")[0].checked = true;  

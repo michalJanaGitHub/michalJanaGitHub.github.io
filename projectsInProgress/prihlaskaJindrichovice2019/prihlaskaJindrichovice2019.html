@@ -52,16 +52,16 @@
         </div>
         <div class="w25PerCent">
           <label for="childZTPP"><span class="fs090em">2.4)</span> Číslo ZTP-P (má-li)</label>
-          <input type="number" name="chilZTPP" id="childZTPP">
+          <input type="number" name="chilZTPP" id="childZTPP" pattern="[0-9]+" title="prosím zadávejte pouze čísla">
         </div>
         <div class="w50PerCent">
           <label for="childInsuranceCompany"><span class="fs090em">2.3)</span> Zdravotní pojišťovna</label>
-          <input type="text" name="childInsuranceCompany" id="childInsuranceCompany" minlength="6"
+          <input type="text" name="childInsuranceCompany" id="childInsuranceCompany" minlength="2"
             title="Název je přiliš krátký" required>
         </div>
         <div class="w50PerCent">
           <label for="childAddress"><span class="fs090em">2.5)</span> Adresa bydliště</label>
-          <input type="text" name="childAddress" id="childAddress" min-length="10" required>
+          <input type="text" name="childAddress" id="childAddress" min-length="2" required>
         </div>
       </fieldset>
 
@@ -223,11 +223,11 @@
             uveďte také podrobnosti)</label>
           <textarea name="otherIllnesses" id="otherIllnesses" minlength="2" required></textarea>
         </div>
-        <div>
+        <!-- <div>
           <label for="otherLimmitationsDetails"><span class="fs090em">5.8)</span> Má Vaše dítě nějaká pohybová nebo
-            režimová omezení? (např. nesmí skákat kvůli glaukomu, riziku odchlípení sítnice apod.)</label>
+            režimová omezení?</label>
           <textarea name="otherLimmitationsDetails" id="otherLimmitationsDetails" minlength="2" required></textarea>
-        </div>
+        </div> -->
         <div>
           <label for="somethingElseToKnowDetails"><span class="fs090em">5.9)</span> Je ještě něco, co bychom měli o
             vašem dítěti vědět? (Pokud ano, uveďte i podrobnosti - např.: Často omdlévá, má problémy s chůzí na dlouhé
@@ -240,7 +240,7 @@
             se něco děje, lékaři, je-li to možné, využijí možnosti kontaktovat své kolegy pro konzultaci, zvlášť u
             našich dětí, které mohou mít různá ne právě obvyklá postižení, či kombinace zdravotních potíží)
           </label>
-          <input type="text" name="doctorContact" id="doctorContact" minlength="25" required>
+          <input type="text" name="doctorContact" id="doctorContact" minlength="14" required>
         </div>
       </fieldset>
 

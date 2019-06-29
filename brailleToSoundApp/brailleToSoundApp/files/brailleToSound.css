@@ -1,0 +1,92 @@
+div.main {
+  margin-left: 10%;
+  /* margin-top: 10%; */
+  width:500px
+}
+
+h1 {
+  text-align: center
+}
+
+textarea {
+  min-width: 500px;
+  width: 500px;
+  min-height: 50px;
+  border: 1px solid;
+}
+
+button {
+  margin: 5px 0px 
+}
+
+div.displayBlock {
+  margin-top: 35px;
+}
+
+div.displayInline > * {
+  display: inline-block;
+}
+
+.displayBlock, .displayBlock > * {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;}
+
+table {
+  margin-top: -8px;
+  margin-left: 10px;
+  table-layout: auto;
+  /* zoom:0.3 */
+  /* width: 500px */
+}
+.colorTransparent {
+  color: transparent;
+}
+
+tr {
+  height: 12px;
+  /* margin:0; */
+  /* padding: 0; */
+}
+
+td {
+  line-height: 30%;
+  padding: 0;
+  margin:0;
+  /* border: 1px solid black; */
+  width: 12px;
+  height: 12px;
+  font-size: 100px;
+  font-weight: bold;
+}
+
+.table-wrapper
+{
+    border: 1px solid;
+    min-width: 500px;
+    width: 500px;
+    min-height: 150px;
+    overflow: auto;
+    resize: both;
+}
+
+.displayNone {
+  display: none;
+}
+
+.alignRight {
+  Float: right;
+}
+
+audio {
+  zoom: 0.6;
+}
+
+#btnToggleSettings {
+  margin-top: 15px;
+}
+
+#settingsDiv {
+  display: none;
+}
+

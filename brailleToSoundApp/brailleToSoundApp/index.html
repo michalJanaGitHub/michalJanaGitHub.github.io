@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="content-language" content="en-us">
+  <base href="./files/" />
+
+  <title>Text to Braille to sound translation</title>
+  <meta name="description" content="Translates text to braille and plays it out">
+
+  <!-- <link type="image/x-icon" rel="icon" href="favicon.ico"> -->
+  <script type="text/javascript" charset="utf-8" src="brailleToSound.js"></script>
+  <link rel="stylesheet" type="text/css" href="brailleToSound.css" />
+</head>
+
+<body>
+
+  <div class='main'>
+    <h1>Text to braille to sound<br>translator</h1>
+
+    <div class="displayBlock">
+      <label for="originalText">Your text to be translated:</label>
+      <textarea id="originalText">Your text</textarea>
+
+      <span id="xxx">
+
+      </span>
+
+      <label for="brailleTranslation">Braille translation:</label>
+      <div id="brailleTranslation" class="table-wrapper" draggable="true"></div>
+
+      <div class="displayInline">
+        <button id="btnPlayAudio" type="button">Play</button>
+        <button id="btnPauseAudio" type="button">Pause</button>
+        <button id="btnStopAudio" type="button">Stop</button>
+        <div class="alignRight">
+          <button id="btnZoomIn" type="button">+</button>
+          <button id="btnZoomOut" type="button">-</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="displayBlock">
+
+      <label for="dotSoundAudioControl">Dot sound</label>
+      <audio controls id="dotSoundAudioControl">
+        <source src='./sounds/ftus_instrument_drum_small_gamelan_hit_stick_single_001_477.mp3'>
+        Your browser does not support the
+        <code>audio</code> element.
+      </audio>
+
+      <label for="noDotSoundAudioControl">No dot sound</label>
+      <audio controls id="noDotSoundAudioControl">
+        <source src='./sounds/ftus_musical_instrument_ching_gamelan_single_hit_001_529.mp3'>
+        Your browser does not support the
+        <code>audio</code> element.
+      </audio>
+
+      <button id="btnToggleSettings" type="button" alt="Show or hide settings">Settings...</button>
+     
+      <div id="settingsDiv" class="displayBlock">
+        <label for="dotSoundInput">Change dot Sound:</label>
+        <input type="file" id="dotSoundInput" name="dotSoundFPath">
+
+        <label for="noDotSoundInput">Change no dot Sound:</label>
+        <input type="file" id="noDotSoundInput" name="dotSound">
+
+        <label for="delayBtwSounds">Delay between sounds:</label>
+        <input id='delayBtwSounds' type="number"  min=0 max=3000>
+
+        <label for='delayBtwTriples'>Delay between triples:</label>
+        <input id='delayBtwTriples' type="number" min=0 max=3000>
+
+        <label for="delayBtwChars">Delay between characters:</label>
+        <input id='delayBtwChars' type="number" min=0 max=3000>
+
+        <label for="delayBtwWords">Delay between words:</label>
+        <input id='delayBtwWords' type="number" min=0 max=3000>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>

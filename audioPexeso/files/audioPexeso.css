@@ -1,0 +1,104 @@
+main {
+  margin-top: 2%;
+  margin-left: 10%;
+}
+
+nav {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+#mainMenu {
+  display:inline-block;
+  padding: 0;
+	margin: 0;
+}
+#mainMenu p {
+  font-size: 30px;
+  font-weight: bold;
+  vertical-align: bottom;
+  width: 300px;
+}
+
+#mainMenu li {
+	display:block;
+	/* width:120px; */
+	float:left;
+	margin-left:2px;
+}
+
+.squaredButton {
+  /* float: right; */
+  border: 1px solid black;
+  background-color: white;
+  width: 37px;
+  height: 37px;
+  margin-bottom: 2px;
+  white-space: normal;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+
+#soundBoard td {
+  border: 1px solid black;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  padding: 0;
+}
+
+#wrapper {
+  white-space: nowrap;
+  text-align: left;
+  margin: 15px 0 0 0;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+#sidebar {
+  vertical-align: top;
+  display: inline-block;
+  margin-left:15px
+}
+
+#sidebar>* {
+  display: block;
+}
+#sidebar > p {
+  margin-top: 10px;
+  font-weight: bold
+}
+
+#middle {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+
+h4 {
+  margin:0;
+  font-size: 12px;
+}
+p {
+  margin: 0;
+  font-size: 11px;
+}
+
+#scoreBoardTable {
+  margin: 5px 0 0 0;
+  font-size: 11px;
+  border-spacing: 0;
+
+}
+#scoreBoardTable tr td:nth-child(2) {
+  width: 15px;
+  text-align: right;
+
+}
+
+.playerOnMove td {
+  color: red;
+}

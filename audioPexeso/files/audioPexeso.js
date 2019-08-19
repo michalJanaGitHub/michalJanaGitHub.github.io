@@ -79,7 +79,6 @@ app.createScoreBoard = async function () {
   let table = document.createElement("table");
   table.setAttribute('id', 'scoreBoardTable');
   let p = app.scoreList;
-  console.log(p);
   let i = 0;
   for (let player of p) {
     let tableRow = table.insertRow();

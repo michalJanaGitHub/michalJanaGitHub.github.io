@@ -43,6 +43,7 @@ function toggleElement(el, display = "block") {
     el.style.display = display;
   } else {
     el.style.display = "none";
+
   }
 }
 
@@ -51,8 +52,8 @@ function autoGrow(element) {
   element.style.height = (element.scrollHeight) + "px";
 }
 
-// converts braille binary string to an array which is later put into a table
-function textToTableArray(txt) {
+// converts braille binary string to an array which is later converted into a table
+function convertTextToTableArray(txt) {
   txt = txt.toString().replace(/ /g, '');
 
   let newArray = [[], [], []];
@@ -77,7 +78,7 @@ function textToTableArray(txt) {
 }
 
 // converts the array to an html table
-function arrayToTable(arr) {
+function convertArrayToTable(arr) {
   // DRAW HTML TABLE
   let table = document.createElement("table");
   table.setAttribute('id', 'brailleTranslationTable');
@@ -214,6 +215,11 @@ app.bindObjects = async function () {
   app.originalTextInput = document.getElementById("originalText");
   app.binaryTranslation = document.getElementById("binaryTranslation");
 
+  app.btnToggleBrailleTranslation = document.getElementById("btnToggleBrailleTranslation");
+  app.brailleTranslationDiv = document.getElementById("brailleTranslationDiv");
+  app.btnZoomIn = document.getElementById("btnZoomIn");
+  app.btnZoomOut = document.getElementById("btnZoomOut");
+
   app.dotSoundInput = document.querySelector('#dotSoundInput');
   app.dotSoundAudioControl = document.querySelector('#dotSoundAudioControl');
   app.dotSoundAudioControlSource = document.querySelector('#dotSoundAudioControl source');
@@ -228,6 +234,9 @@ app.bindObjects = async function () {
   app.delayBtwWordsInput = document.querySelector('#delayBtwWords');
 
   app.settingsDiv = document.querySelector('#settingsDiv');
+  app.btnToggleSettings = document.querySelector('#btnToggleSettings');
+  app.soundControlsDiv = document.querySelector('#soundControlsDiv');
+  app.btnToggleSoundControls = document.querySelector('#btnToggleSoundControls');
 };
 
 // Binding events to controls
@@ -237,12 +246,12 @@ app.bindEvents = async function () {
       let translatedText = app.translateText(app.originalTextInput.value);
       app.remainingTextToPlay = translatedText.toString().replace(/ /g, '');
 
-      let newArr = textToTableArray(translatedText);
-      let brailleTranslationDiv = document.getElementById("brailleTranslation");
+      let newArr = convertTextToTableArray(translatedText);
+      let brailleTranslationDiv = document.getElementById("brailleTranslationDiv");
       while (brailleTranslationDiv.firstChild) {
         brailleTranslationDiv.removeChild(brailleTranslationDiv.firstChild);
       }
-      let table = arrayToTable(newArr);
+      let table = convertArrayToTable(newArr);
       table.setAttribute('id', 'brailleTranslationTable');
 
       brailleTranslationDiv.appendChild(table);
@@ -272,24 +281,48 @@ app.bindEvents = async function () {
       app.remainingTextToPlay = '';
     }
   );
-  document.getElementById("btnZoomIn").addEventListener(
+  app.btnZoomIn.addEventListener(
     "click", () => {
       app.translationTableZoom = app.translationTableZoom * 1.1;
       app.saveSettingsToLocalStorage();
       document.getElementById("brailleTranslationTable").style.zoom = app.translationTableZoom;
     }
   );
-  document.getElementById("btnZoomOut").addEventListener(
+  app.btnZoomOut.addEventListener(
     "click", () => {
       app.translationTableZoom = app.translationTableZoom * 0.9;
       app.saveSettingsToLocalStorage();
       document.getElementById("brailleTranslationTable").style.zoom = app.translationTableZoom;
     }
   );
-  document.getElementById("btnToggleSettings").addEventListener(
+
+  app.btnToggleBrailleTranslation.addEventListener(
     "click", () => {
-      toggleElement(app.settingsDiv);
+      toggleElement(app.brailleTranslationDiv);
+      toggleElement(app.btnZoomIn.parentNode);
+      if (app.btnToggleBrailleTranslation.getAttribute('aria-pressed') === 'false')
+        app.btnToggleBrailleTranslation.setAttribute('aria-pressed', 'true');
+      else app.btnToggleBrailleTranslation.setAttribute('aria-pressed', 'false');
     }
+  );
+
+  app.soundControlsDiv.style.display = 'none';
+  app.btnToggleSoundControls.addEventListener(
+    "click", () => {
+      toggleElement(app.soundControlsDiv);
+      if (app.btnToggleSoundControls.getAttribute('aria-pressed') === 'false' )
+        app.btnToggleSoundControls.setAttribute('aria-pressed', 'true');
+      else app.btnToggleSoundControls.setAttribute('aria-pressed', 'false');
+    }
+  );
+  app.settingsDiv.style.display = 'none'; // for some reason when doing the css the click only worked for the second time
+  app.btnToggleSettings.addEventListener(
+      "click", () => {
+      toggleElement(app.settingsDiv);
+      if (app.btnToggleSettings.getAttribute('aria-pressed') === 'false' )
+        app.btnToggleSettings.setAttribute('aria-pressed', 'true');
+      else app.btnToggleSettings.setAttribute('aria-pressed', 'false');
+    } 
   );
   app.dotSoundInput.addEventListener(
     "change", () => {

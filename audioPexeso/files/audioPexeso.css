@@ -39,6 +39,7 @@ nav {
   text-align: center;
   font-size: 10px;
   font-weight: 400;
+  word-wrap: normal;
 }
 
 
@@ -96,9 +97,19 @@ p {
 #scoreBoardTable tr td:nth-child(2) {
   width: 15px;
   text-align: right;
-
 }
 
 .playerOnMove td {
-  color: red;
+  text-decoration: underline;
+}
+
+td {
+  padding:0px;
+}
+
+td input {
+  border: 0px;
+  margin: 0pt;
+  background-color: white;
+  object-fit: cover
 }

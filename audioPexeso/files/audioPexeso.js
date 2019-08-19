@@ -6,7 +6,7 @@ let app = {};
 
 // Basic settings
 app.set = {};
-app.set.minNumberOfSounds = 2;
+app.set.minNumberOfSounds = 1;
 app.set.maxNumberOfSounds = 25;
 
 window.onload = () => {
@@ -72,7 +72,7 @@ app.changeSettings = function () {
   app.newGame();
 };
 // Writes list of players to the left sidebar
-app.drawScoreBoard = async function () {
+app.createScoreBoard = async function () {
   let scoreListDiv = document.getElementById('scoreBoardDiv');
   app.removeChildren(scoreListDiv);
 
@@ -123,9 +123,15 @@ app.createBoard = function (n) {
     for (let j = 0; j < x; j++) {
       k++;
       let cell = tableRow.insertCell();
-      cell.setAttribute('id', k);
-      cell.innerHTML = k;
-      cell.addEventListener('click', app.cardClick, false);
+        let butt = document.createElement("input");
+        butt.setAttribute('type', 'button');
+        butt.setAttribute('id', k);
+        butt.setAttribute('value', k);
+        butt.addEventListener('click', app.cardClick, false);
+        cell.appendChild(butt);
+        // cell.setAttribute('id', k);
+        // cell.innerHTML = k;
+        cell.addEventListener('click', app.cardClick, false);
       if (k === n) break;
     }
     if (k === n) break;
@@ -146,7 +152,7 @@ app.newGame = async function () {
   await app.createBoard(app.noOfSounds * 2);
   await app.assignSoundsToCards();
   await app.createScoreList();
-  await app.drawScoreBoard();
+  await app.createScoreBoard();
 };
 // Assigns each sound to two random cards
 app.assignSoundsToCards = function () {
@@ -163,7 +169,7 @@ app.assignSoundsToCards = function () {
 app.cardClick = async function () {
   if (app.disableCardClick) return;
   app.disableCardClick = true;
-  let cardIndex = this.innerHTML;
+  let cardIndex = this.id;
   await app.playChosenCardSound(cardIndex);
 
   // First trial
@@ -173,9 +179,15 @@ app.cardClick = async function () {
   else {
     // If the same sound twice
     if (app.assignedSoundsArray[cardIndex] === app.assignedSoundsArray[app.firstCardIndex] && cardIndex !== app.firstCardIndex) {
-      document.getElementById(cardIndex).style.backgroundColor = 'grey';
+      document.getElementById(cardIndex).style.display = 'none'; 
+      document.getElementById(cardIndex).parentNode.style.borderColor = '#d4d4d6'; 
+      document.getElementById(cardIndex).parentNode.style.borderStyle = 'dashed'; 
+
       document.getElementById(cardIndex).removeEventListener('click', app.cardClick);
-      document.getElementById(app.firstCardIndex).style.backgroundColor = 'grey';
+      document.getElementById(app.firstCardIndex).style.display = 'none';
+      document.getElementById(app.firstCardIndex).parentNode.style.borderColor = '#d4d4d6'; 
+      document.getElementById(app.firstCardIndex).parentNode.style.borderStyle = 'dashed'; 
+
       document.getElementById(app.firstCardIndex).removeEventListener('click', app.cardClick);
       app.scoreList[app.playerOnMoveId][1] += 1;
     }
@@ -183,7 +195,7 @@ app.cardClick = async function () {
       if (app.playerOnMoveId === app.noOfPlayers - 1) app.playerOnMoveId = 0;
       else app.playerOnMoveId += 1;
     }
-    app.drawScoreBoard();
+    app.createScoreBoard();
     app.firstCardIndex = '';
   }
   app.disableCardClick = false;

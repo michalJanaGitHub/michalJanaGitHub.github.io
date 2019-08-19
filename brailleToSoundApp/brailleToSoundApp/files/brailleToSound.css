@@ -4,10 +4,6 @@ div.main {
   width:500px
 }
 
-h1 {
-  text-align: center
-}
-
 textarea {
   min-width: 500px;
   width: 500px;
@@ -15,13 +11,16 @@ textarea {
   border: 1px solid;
 }
 
-button {
-  margin: 5px 0px 
+
+input[type="button"] {
+  background-color: white;
+  font-weight: 545;  
+  border: 1px solid black
 }
 
-div.displayBlock {
-  margin-top: 35px;
-}
+/* div.displayBlock { */
+  /* margin-top: 35px; */
+/* } */
 
 div.displayInline > * {
   display: inline-block;
@@ -36,8 +35,6 @@ table {
   margin-top: -8px;
   margin-left: 10px;
   table-layout: auto;
-  /* zoom:0.3 */
-  /* width: 500px */
 }
 .colorTransparent {
   color: transparent;
@@ -45,15 +42,12 @@ table {
 
 tr {
   height: 12px;
-  /* margin:0; */
-  /* padding: 0; */
 }
 
 td {
   line-height: 30%;
   padding: 0;
   margin:0;
-  /* border: 1px solid black; */
   width: 12px;
   height: 12px;
   font-size: 100px;
@@ -81,12 +75,3 @@ td {
 audio {
   zoom: 0.6;
 }
-
-#btnToggleSettings {
-  margin-top: 15px;
-}
-
-#settingsDiv {
-  display: none;
-}
-

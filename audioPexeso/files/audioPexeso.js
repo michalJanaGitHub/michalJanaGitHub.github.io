@@ -8,6 +8,9 @@ let app = {};
 app.set = {};
 app.set.minNumberOfSounds = 1;
 app.set.maxNumberOfSounds = 25;
+app.usedSoundsArray = [];
+app.cardToSoundArray = [];
+app.audioElements = {};
 
 window.onload = () => {
   app.init();
@@ -20,15 +23,16 @@ window.onload = () => {
 app.init = async function () {
   await app.getSettingsFromLocalStorage();
   await app.bindObjectsAndEvents();
-  await app.newGame();
+  await app.startNewGame();
 
 };
 // Binds to button clicks etc
 app.bindObjectsAndEvents = async function () {
   app.audioControl1 = document.querySelector('#audioControl1');
   app.audioControl1Source = document.querySelector('#audioControl1 source');
+  app.audioElementsContainer = document.querySelector('#audioElementsContainer');
 
-  document.getElementById("btnNewGame").addEventListener('click', app.newGame);
+  document.getElementById("btnNewGame").addEventListener('click', app.startNewGame);
   document.getElementById("btnSettings").addEventListener('click', app.changeSettings);
 };
 // Load settings or default values
@@ -69,7 +73,7 @@ app.changeSettings = function () {
   app.noOfSounds = noOfSounds;
   app.players = playersList.replace(/, /g, ',').trim().split(',');
   app.saveSettingsToLocalStorage();
-  app.newGame();
+  app.startNewGame();
 };
 // Writes list of players to the left sidebar
 app.createScoreBoard = async function () {
@@ -91,7 +95,7 @@ app.createScoreBoard = async function () {
   }
 
   scoreListDiv.appendChild(table);
-};
+};                                        
 // Creates a two dimensional array from app.players
 app.createScoreList = async function () {
   app.scoreList = [];
@@ -137,13 +141,21 @@ app.createBoard = function (n) {
   }
   soundBoardDiv.appendChild(table);
 };
+// for each sound used in game creates an element to be played
+app.createAudioElements = function () {
+  app.audioElements = {};
+  for (let sound of app.usedSoundsArray) {
+    app.audioElements[sound] = new app.AudioElement('./sounds/' + sound);
+  }
+  console.log(app.audioElements);
+};
 
 /*
 * Play game
 */
 
 // starts a new game
-app.newGame = async function () {
+app.startNewGame = async function () {
   app.playerOnMoveId = 0;
   app.noOfPlayers = app.players.length;
   app.firstCardIndex = '';
@@ -155,14 +167,14 @@ app.newGame = async function () {
 };
 // Assigns each sound to two random cards
 app.assignSoundsToCards = function () {
-  let shuffledArray = app.shuffleArray(app.soundList).slice(0, app.noOfSounds);
-  let doubledArray = app.shuffleArray(shuffledArray.concat(shuffledArray));
+  app.usedSoundsArray = app.shuffleArray(app.soundList).slice(0, app.noOfSounds);
+  let doubledArray = app.shuffleArray(app.usedSoundsArray.concat(app.usedSoundsArray));
   let i = 0;
-  app.assignedSoundsArray = {};
   for (let sound of doubledArray) {
     i++;
-    app.assignedSoundsArray[i] = sound;
+    app.cardToSoundArray[i] = sound;
   }
+  app.createAudioElements();
 };
 // After clicking on a card
 app.cardClick = async function () {
@@ -177,7 +189,7 @@ app.cardClick = async function () {
   // Second trial
   else {
     // If the same sound twice
-    if (app.assignedSoundsArray[cardIndex] === app.assignedSoundsArray[app.firstCardIndex] && cardIndex !== app.firstCardIndex) {
+    if (app.cardToSoundArray[cardIndex] === app.cardToSoundArray[app.firstCardIndex] && cardIndex !== app.firstCardIndex) {
       document.getElementById(cardIndex).style.display = 'none'; 
       document.getElementById(cardIndex).parentNode.style.borderColor = '#d4d4d6'; 
       document.getElementById(cardIndex).parentNode.style.borderStyle = 'dashed'; 
@@ -201,7 +213,22 @@ app.cardClick = async function () {
 };
 
 app.playChosenCardSound = async function (cardIndex) {
-  let sound = app.assignedSoundsArray[cardIndex];
+  let sound = app.cardToSoundArray[cardIndex];
+  // document.querySelector(`audio[src='./sounds/${sound}']`).play();
+  // console.log(sound);
+  let x = './sounds/' + sound;
+  if (sound) {
+    console.log(x);
+    let snd = new Audio();
+    snd.src = x;
+    snd.load();
+    snd.play();
+  }
+// }
+};
+
+app.playChosenCardSoundOld = async function (cardIndex) {
+  let sound = app.cardToSoundArray[cardIndex];
 
   let duration;
   await app.audioControl1Source.setAttribute('src', './sounds/' + sound);
@@ -254,6 +281,21 @@ app.soundList = [
 * General purpose functions
 *
 */
+
+app.AudioElement = function (src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  app.audioElementsContainer.appendChild(this.sound);
+  this.play = function () {
+    this.sound.play();
+  };
+  this.stop = function () {
+    this.sound.pause();
+  };
+};
 
 app.removeChildren = function (element) {
   while (element.firstChild) {

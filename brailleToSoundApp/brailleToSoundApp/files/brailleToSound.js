@@ -176,7 +176,6 @@ app.playText = async function () {
       break;
     }
     let char = app.remainingTextToPlay.substring(0, 6);
-    console.log(app.delayBtwWords);
     if (char === '000000' || char === 'nnnlll') await delay(app.delayBtwWords);
     else {
       await app.playCharacter(char, position);

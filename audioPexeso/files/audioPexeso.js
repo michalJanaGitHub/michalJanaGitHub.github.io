@@ -1,6 +1,6 @@
 /*
 * All the main logic of the app
-*/
+*/ //xxx
 
 let app = {};
 
@@ -92,7 +92,7 @@ app.createScoreBoard = async function () {
     cell = tableRow.insertCell();
     cell.innerHTML = player[1];
     i++;
-  }
+  } 
 
   scoreListDiv.appendChild(table);
 };                                        

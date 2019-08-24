@@ -146,6 +146,9 @@ app.createAudioElements = function () {
   app.audioElements = {};
   for (let sound of app.usedSoundsArray) {
     app.audioElements[sound] = new app.AudioElement('./sounds/' + sound);
+      let snd = new Audio();
+      snd.src = './sounds/' + sound;
+      snd.load();
   }
   console.log(app.audioElements);
 };

@@ -1,0 +1,14 @@
+h3, a {
+  display: block;
+  margin: 0px;
+}
+
+img {
+  width: 480px;
+  height: 250px;
+}
+
+.box {
+  display: inline-block;
+  margin-left: 20px
+}

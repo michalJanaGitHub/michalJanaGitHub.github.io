@@ -217,38 +217,27 @@ app.cardClick = async function () {
 
 app.playChosenCardSound = async function (cardIndex) {
   let sound = app.cardToSoundArray[cardIndex];
-  // document.querySelector(`audio[src='./sounds/${sound}']`).play();
-  // console.log(sound);
+
   let x = './sounds/' + sound;
-  if (sound) {
-    console.log(x);
-    let snd = new Audio();
-    snd.src = x;
-    snd.load();
-    snd.play();
-  }
-// }
-};
-
-app.playChosenCardSoundOld = async function (cardIndex) {
-  let sound = app.cardToSoundArray[cardIndex];
-
-  let duration;
-  await app.audioControl1Source.setAttribute('src', './sounds/' + sound);
-  await app.audioControl1.load();
+  console.log(x);
+  let snd = new Audio();
+  snd.src = x;
+  snd.load();
   await app.delay(100);
 
-  duration = app.audioControl1.duration * 1000;
+  let duration;
+
+  duration = snd.duration * 1000;
   if (duration > 5000) duration = 5000;
 
-  app.audioControl1.play();
+  snd.play();
   await app.delay(duration + 50);
-  app.audioControl1.pause();
-  app.audioControl1.currentTime = 0;
+  snd.pause();
+  snd.currentTime = 0;
 
   if (duration < 1000) {
     await app.delay(400);
-    app.audioControl1.play();
+    snd.play();
   }
 };
 

@@ -1,3 +1,12 @@
+body {
+  margin-left: 5%;
+  max-width: 1600px
+}
+
+h1 {
+  font-size: 3em;
+}
+
 h3, a {
   display: block;
   margin: 0px;
@@ -10,5 +19,4 @@ img {
 
 .box {
   display: inline-block;
-  margin-left: 20px
 }

@@ -209,17 +209,16 @@ app.assignSoundsToCards = function () {
   app.usedSoundsArray = fn.shuffleArray(app.soundList).slice(0, app.noOfSounds);
 
   //load all sounds first sot that one doesnt get this error at first click
-  for (index = 0; index <  app.usedSoundsArray.length; index++) { 
-    let sound = app.usedSoundsArray[index];
+  for (let sound of app.usedSoundsArray) { 
     let x = './sounds/' + sound;
     let snd = new Audio();
     snd.src = x;
     snd.load();
 }
 
-  let doubledArray = fn.shuffleArray(app.usedSoundsArray.concat(app.usedSoundsArray));
+  let dubSoundsArray = fn.shuffleArray(app.usedSoundsArray.concat(app.usedSoundsArray));
   let i = 0;
-  for (let sound of doubledArray) {
+  for (let sound of dubSoundsArray) {
     i++;
     app.cardToSoundArray[i] = sound;
   }

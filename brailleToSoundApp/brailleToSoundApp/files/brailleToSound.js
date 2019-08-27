@@ -175,9 +175,8 @@ app.translateText = function (txt) {
 
 // plays text from app.remainingTextToPlay variable
 app.playText = async function () {
-  app.dotSoundAudioControl.load();
-  app.noDotSoundAudioControl.load();
-  await delay(500);
+  await app.dotSoundAudioControl.load();
+  await app.noDotSoundAudioControl.load();
   let position = app.playSoundPaused[1];
   while (app.remainingTextToPlay.length > 0) {
     if (app.playSoundPaused[0] || app.playSoundStopped) {

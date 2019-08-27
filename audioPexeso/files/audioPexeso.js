@@ -262,12 +262,12 @@ app.cardClick = async function () {
 
 app.playChosenCardSound = async function (cardIndex) {
   let sound = app.cardToSoundArray[cardIndex];
-
+  let err;
   let x = './sounds/' + sound;
   let snd = new Audio();
   snd.src = x;
   snd.load();
-  await fn.delay(100);
+  await fn.delay(300);
 
   let duration;
 

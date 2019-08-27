@@ -7,10 +7,11 @@
   <base href="./files/" />
 
   <title>Audio pexeso</title>
-  <meta name="description" content="Sound game">
+  <meta name="description" content="#LNG_Audio memory game">
 
   <!-- <link type="image/x-icon" rel="icon" href="favicon.ico"> -->
   <script type="text/javascript" charset="utf-8" src="audioPexeso.js"></script>
+  <script type="text/javascript" src="lang.js"></script>
   <link rel="stylesheet" type="text/css" href="audioPexeso.css" />
 </head>
 
@@ -20,9 +21,9 @@
     <h1>Audio Pexeso</h1>
     <nav>
       <ul id="mainMenu">
+        <li><input type="button" class=squaredButton id="btnLangs" value="#LNG_CZ" aria-label="#LNG_Change language to Czech"></input></li>      
         <li><input type="button" class=squaredButton id="btnNewGame" value="#LNG_New game" aria-label="#LNG_Start new game"></input></li>
         <li><input type="button" class=squaredButton id="btnSettings" value="#LNG_Sett." aria-label="#LNG_Open dialog with game parameters"></input></li>
-        <li><input type="button" class=squaredButton id="btnTrial" value="#LNG_CZ" aria-label="#LNG_Change language to Czech"></input></li>      
       </ul>
     </nav>
 
@@ -36,7 +37,6 @@
 
       <div id="sidebar">
 
-        <h4>Score:</h4>
         <div id="scoreBoardDiv">
 
         </div>

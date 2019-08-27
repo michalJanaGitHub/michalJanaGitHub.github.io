@@ -3,11 +3,15 @@
 */ //xxx
 
 let app = {};
+let fn = {};
 
 // Basic settings
 app.set = {};
 app.set.minNumberOfSounds = 1;
 app.set.maxNumberOfSounds = 25;
+app.set.defNumberOfSounds = 18;
+app.set.defPlayersList = ['Pat', 'Mat', 'Snowflake'];
+app.set.defLanguage = 'ENG';
 app.usedSoundsArray = [];
 app.cardToSoundArray = [];
 app.audioElements = {};
@@ -22,10 +26,26 @@ window.onload = () => {
 
 app.init = async function () {
   await app.getSettingsFromLocalStorage();
+  await app.translateToPreferredLanguage(app.preferredLanguage);
   await app.bindObjectsAndEvents();
   await app.startNewGame();
 
 };
+
+// Translate to preferred language
+app.translateToPreferredLanguage = async function (language) {
+  for (let key in app.langDictionary) {
+    let translation = '';
+    for (let lng in app.langDictionary[key]) {
+      if (lng === language) {
+        translation = app.langDictionary[key][lng];
+        document.body.innerHTML = document.body.innerHTML.replace(key, translation);
+        document.head.innerHTML = document.head.innerHTML.replace(key, translation);
+      }
+    }
+  }
+};
+
 // Binds to button clicks etc
 app.bindObjectsAndEvents = async function () {
   app.audioControl1 = document.querySelector('#audioControl1');
@@ -34,36 +54,52 @@ app.bindObjectsAndEvents = async function () {
 
   document.getElementById("btnNewGame").addEventListener('click', app.startNewGame);
   document.getElementById("btnSettings").addEventListener('click', app.changeSettings);
+  document.getElementById("btnLangs").addEventListener('click', app.translateClick);
 };
+
 // Load settings or default values
 app.getSettingsFromLocalStorage = async function () {
   let p;
   p = localStorage.getItem('players');
-  app.players = (p !== null) ? p.split(',') : ['Pat', 'Mat'];
+  app.players = (p !== null) ? p.split(',') : app.set.defPlayersList;
   p = localStorage.getItem('noOfSounds');
-  app.noOfSounds = (p !== null) ? p : 18;
+  app.noOfSounds = (p !== null) ? p : app.set.defNumberOfSounds;
   if (app.noOfSounds > app.maxNumberOfSounds) app.noOfSounds = app.maxNumberOfSounds;
+  p = localStorage.getItem('preferredLanguage');
+  app.preferredLanguage = (p !== null) ? p : app.set.defLanguage;
 };
+
 // Save settings to browser's local storage
 app.saveSettingsToLocalStorage = async function () {
   localStorage.setItem('players', app.players.join(','));
   localStorage.setItem('noOfSounds', app.noOfSounds);
+  localStorage.setItem('preferredLanguage', app.preferredLanguage);
+
 };
+
 // After clicking on button change settings
 app.changeSettings = function () {
   let min = app.set.minNumberOfSounds;
   let max = app.set.maxNumberOfSounds;
+  let promptText = app.langDictionary['#LNG_PleaseEnterNoOfCards'][app.preferredLanguage];
+  promptText = promptText.replace('min', min);
+  promptText = promptText.replace('max', max);
 
   let noOfSounds = prompt(
-    `Please enter number of sounds (between ${min} and ${max})`,
+    promptText,
     app.noOfSounds
   );
 
   if (!(noOfSounds >= min && noOfSounds <= max)) {
-    alert(`Number must be between ${min} and ${max}`);
+    let promptText = app.langDictionary['#LNG_InvalidNoOCards'][app.preferredLanguage];
+    promptText = promptText.replace('min', min);
+    promptText = promptText.replace('max', max);
+    alert(promptText);
     return;
   }
-  let playersList = prompt("Please enter list of players divided by commas", app.players.join(','));
+
+  promptText = app.langDictionary['#LNG_PleaseEnterListOfPlayers'][app.preferredLanguage];
+  let playersList = prompt(promptText, app.players.join(','));
 
   if (playersList.trim().length === 0) {
     alert("Wrong entry");
@@ -75,10 +111,11 @@ app.changeSettings = function () {
   app.saveSettingsToLocalStorage();
   app.startNewGame();
 };
+
 // Writes list of players to the left sidebar
 app.createScoreBoard = async function () {
   let scoreListDiv = document.getElementById('scoreBoardDiv');
-  app.removeChildren(scoreListDiv);
+  fn.removeChildren(scoreListDiv);
 
   let table = document.createElement("table");
   table.setAttribute('id', 'scoreBoardTable');
@@ -92,27 +129,30 @@ app.createScoreBoard = async function () {
     cell = tableRow.insertCell();
     cell.innerHTML = player[1];
     i++;
-  } 
+  }
 
   scoreListDiv.appendChild(table);
-};                                        
+};
+
 // Creates a two dimensional array from app.players
 app.createScoreList = async function () {
   app.scoreList = [];
   for (let player of app.players) {
     app.scoreList.push([player, 0]);
   }
-  app.scoreList = app.shuffleArray(app.scoreList);
+  app.scoreList = fn.shuffleArray(app.scoreList);
 };
+
 // Returns score list sorted by score
 app.scoreListByScore = async function () {
   return app.scoreList.sort((a, b) => { return b[1] - a[1]; });
 };
+
 // Creates board with cards
 app.createBoard = function (n) {
 
   let soundBoardDiv = document.querySelector('#soundBoardDiv');
-  app.removeChildren(soundBoardDiv);
+  fn.removeChildren(soundBoardDiv);
 
   let table = document.createElement("table");
   table.setAttribute('id', 'soundBoard');
@@ -126,31 +166,26 @@ app.createBoard = function (n) {
     for (let j = 0; j < x; j++) {
       k++;
       let cell = tableRow.insertCell();
-        let butt = document.createElement("input");
-        butt.setAttribute('type', 'button');
-        butt.setAttribute('id', k);
-        butt.setAttribute('value', k);
-        butt.addEventListener('click', app.cardClick, false);
-        cell.appendChild(butt);
-        // cell.setAttribute('id', k);
-        // cell.innerHTML = k;
-        cell.addEventListener('click', app.cardClick, false);
+      let butt = document.createElement("input");
+      butt.setAttribute('type', 'button');
+      butt.setAttribute('id', k);
+      butt.setAttribute('value', k);
+      butt.addEventListener('click', app.cardClick, false);
+      cell.appendChild(butt);
+      // cell.setAttribute('id', k);
+      // cell.innerHTML = k;
+      cell.addEventListener('click', app.cardClick, false);
       if (k === n) break;
     }
     if (k === n) break;
   }
   soundBoardDiv.appendChild(table);
 };
-// for each sound used in game creates an element to be played
-app.createAudioElements = function () {
-  app.audioElements = {};
-  for (let sound of app.usedSoundsArray) {
-    app.audioElements[sound] = new app.AudioElement('./sounds/' + sound);
-      let snd = new Audio();
-      snd.src = './sounds/' + sound;
-      snd.load();
-  }
-  console.log(app.audioElements);
+
+app.translateClick = function () {
+  app.preferredLanguage = this.value;
+  app.saveSettingsToLocalStorage();
+  location.reload(false);
 };
 
 /*
@@ -168,17 +203,18 @@ app.startNewGame = async function () {
   await app.createScoreList();
   await app.createScoreBoard();
 };
+
 // Assigns each sound to two random cards
 app.assignSoundsToCards = function () {
-  app.usedSoundsArray = app.shuffleArray(app.soundList).slice(0, app.noOfSounds);
-  let doubledArray = app.shuffleArray(app.usedSoundsArray.concat(app.usedSoundsArray));
+  app.usedSoundsArray = fn.shuffleArray(app.soundList).slice(0, app.noOfSounds);
+  let doubledArray = fn.shuffleArray(app.usedSoundsArray.concat(app.usedSoundsArray));
   let i = 0;
   for (let sound of doubledArray) {
     i++;
     app.cardToSoundArray[i] = sound;
   }
-  app.createAudioElements();
 };
+
 // After clicking on a card
 app.cardClick = async function () {
   if (app.disableCardClick) return;
@@ -193,14 +229,14 @@ app.cardClick = async function () {
   else {
     // If the same sound twice
     if (app.cardToSoundArray[cardIndex] === app.cardToSoundArray[app.firstCardIndex] && cardIndex !== app.firstCardIndex) {
-      document.getElementById(cardIndex).style.display = 'none'; 
-      document.getElementById(cardIndex).parentNode.style.borderColor = '#d4d4d6'; 
-      document.getElementById(cardIndex).parentNode.style.borderStyle = 'dashed'; 
+      document.getElementById(cardIndex).style.display = 'none';
+      document.getElementById(cardIndex).parentNode.style.borderColor = '#d4d4d6';
+      document.getElementById(cardIndex).parentNode.style.borderStyle = 'dashed';
 
       document.getElementById(cardIndex).removeEventListener('click', app.cardClick);
       document.getElementById(app.firstCardIndex).style.display = 'none';
-      document.getElementById(app.firstCardIndex).parentNode.style.borderColor = '#d4d4d6'; 
-      document.getElementById(app.firstCardIndex).parentNode.style.borderStyle = 'dashed'; 
+      document.getElementById(app.firstCardIndex).parentNode.style.borderColor = '#d4d4d6';
+      document.getElementById(app.firstCardIndex).parentNode.style.borderStyle = 'dashed';
 
       document.getElementById(app.firstCardIndex).removeEventListener('click', app.cardClick);
       app.scoreList[app.playerOnMoveId][1] += 1;
@@ -223,7 +259,7 @@ app.playChosenCardSound = async function (cardIndex) {
   let snd = new Audio();
   snd.src = x;
   snd.load();
-  await app.delay(100);
+  await fn.delay(100);
 
   let duration;
 
@@ -231,15 +267,47 @@ app.playChosenCardSound = async function (cardIndex) {
   if (duration > 5000) duration = 5000;
 
   snd.play();
-  await app.delay(duration + 50);
+  await fn.delay(duration + 50);
   snd.pause();
   snd.currentTime = 0;
 
   if (duration < 1000) {
-    await app.delay(400);
+    await fn.delay(400);
     snd.play();
   }
 };
+
+
+/*
+* General purpose functions
+*
+*/
+
+fn.removeChildren = function (element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+};
+
+fn.shuffleArray = function (array) {
+  array.sort(() => Math.random() - 0.5);
+  return array;
+};
+
+// no promisified setTimeout() function
+fn.delay = function (ms) {
+  var ctr, rej, p = new Promise(function (resolve, reject) {
+    ctr = setTimeout(resolve, ms);
+    rej = reject;
+  });
+  p.cancel = function () { clearTimeout(ctr); rej(Error("Cancelled")); };
+  return p;
+};
+
+/*
+* lists and dictionaries
+*
+*/
 
 app.soundList = [
   'Anhinga-SoundBible.com-430373648.mp3',
@@ -269,43 +337,49 @@ app.soundList = [
   'Yelling Yee Ha.wav'
 ];
 
-/*
-* General purpose functions
-*
-*/
-
-app.AudioElement = function (src) {
-  this.sound = document.createElement("audio");
-  this.sound.src = src;
-  this.sound.setAttribute("preload", "auto");
-  this.sound.setAttribute("controls", "none");
-  this.sound.style.display = "none";
-  app.audioElementsContainer.appendChild(this.sound);
-  this.play = function () {
-    this.sound.play();
-  };
-  this.stop = function () {
-    this.sound.pause();
-  };
-};
-
-app.removeChildren = function (element) {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
+app.langDictionary = {
+  "#LNG_New game": {
+    "ENG": "New game",
+    "CZ": "Nová hra"
+  },
+  "#LNG_Start new game": {
+    "ENG": "Start new game",
+    "CZ": "Začít novou hru"
+  },
+  "#LNG_Sett.": {
+    "ENG": "Sett.",
+    "CZ": "Nast."
+  },
+  "#LNG_Open dialog with game parameters": {
+    "ENG": "Open dialog with game parameters",
+    "CZ": "Otevře dialog s parametry hry"
+  },
+  "#LNG_Change language to Czech": {
+    "ENG": "Change language to Czech",
+    "CZ": "Změnit jazy na Anglický"
+  },
+  "#LNG_Score": {
+    "ENG": "Score",
+    "CZ": "Skóre"
+  },
+  "#LNG_CZ": {
+    "ENG": "CZ",
+    "CZ": "ENG"
+  },
+  "#LNG_Audio memory game": {
+    "ENG": "Audio memory game",
+    "CZ": "Pexeso nejen pro nevidomé"
+  },
+  "#LNG_PleaseEnterNoOfCards": {
+      "ENG": "Please enter number of pairs of cards (between min and max)",
+      "CZ": "Prosím zadejte počet dvojic karet (mezi min a max)"
+  },
+  "#LNG_PleaseEnterListOfPlayers": {
+    "ENG": "Please enter list of players divided  by commas",
+    "CZ": "Prosím zadejte seznam hráčů oddělený čárkami"
+  },
+  "#LNG_InvalidNoOCards": {
+    "ENG": "Number of cards must be between min and max",
+    "CZ": "Počet karet musí být mezi min a max"
   }
-};
-
-app.shuffleArray = function (array) {
-  array.sort(() => Math.random() - 0.5);
-  return array;
-};
-
-// no promisified setTimeout() function
-app.delay = function (ms) {
-  var ctr, rej, p = new Promise(function (resolve, reject) {
-    ctr = setTimeout(resolve, ms);
-    rej = reject;
-  });
-  p.cancel = function () { clearTimeout(ctr); rej(Error("Cancelled")); };
-  return p;
 };

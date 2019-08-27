@@ -266,7 +266,7 @@ app.playChosenCardSound = async function (cardIndex) {
   let x = './sounds/' + sound;
   let snd = new Audio();
   snd.src = x;
-  snd.load();
+  await snd.load();
   await fn.delay(300);
 
   let duration;

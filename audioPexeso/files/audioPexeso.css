@@ -1,4 +1,6 @@
-
+body {
+  display : none;
+}
 
 main {
   margin-top: 2%;

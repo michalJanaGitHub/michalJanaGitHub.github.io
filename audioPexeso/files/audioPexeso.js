@@ -25,6 +25,7 @@ window.onload = () => {
 */
 
 app.init = async function () {
+  document.getElementById('turnOnJSWarning').innerHTML = '';
   await app.getSettingsFromLocalStorage();
   await app.translateToPreferredLanguage(app.preferredLanguage);
   await app.bindObjectsAndEvents();
@@ -34,6 +35,7 @@ app.init = async function () {
 
 // Translate to preferred language
 app.translateToPreferredLanguage = async function (language) {
+  document.body.style.display = 'none';
   for (let key in app.langDictionary) {
     let translation = '';
     for (let lng in app.langDictionary[key]) {
@@ -44,6 +46,7 @@ app.translateToPreferredLanguage = async function (language) {
       }
     }
   }
+  document.body.style.display = 'block';
 };
 
 // Binds to button clicks etc

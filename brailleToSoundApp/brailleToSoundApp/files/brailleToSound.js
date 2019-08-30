@@ -423,16 +423,16 @@ app.getSettingsFromLocalStorage = function () {
   if (app.noDotSoundFileName === null || app.noDotSoundFileName === '')
     app.noDotSoundFileName = 'ftus_musical_instrument_ching_gamelan_single_hit_001_529.mp3';
   if (app.delayBtwSounds === null)
-    app.delayBtwSounds = app.deffSet.delayBtwSounds;
+    app.delayBtwSounds = app.defSett.delayBtwSounds;
 
   if (app.delayBtwTriples === null || app.delayBtwTriples === '')
-    app.delayBtwTriples = app.deffSet.delayBtwTriples;
+    app.delayBtwTriples = app.defSett.delayBtwTriples;
   if (app.delayBtwChars === null || app.delayBtwChars === '')
-    app.delayBtwChars = app.deffSet.delayBtwChars;
+    app.delayBtwChars = app.defSett.delayBtwChars;
   if (app.delayBtwWords === null || app.delayBtwWords === '')
-    app.delayBtwWords = app.deffSet.delayBtwWords;
+    app.delayBtwWords = app.defSett.delayBtwWords;
   if (app.translationTableZoom === null || app.translationTableZoom === '')
-    app.translationTableZoom = app.deffSet.translationTableZoom;
+    app.translationTableZoom = app.defSett.translationTableZoom;
 };
 
 app.saveSettingsToLocalStorage = function () {
@@ -545,9 +545,9 @@ const langDictionary = {
   "#LNG_DelayBetweenTriples": { "ENG" : "Delay between triples", "CZ" : "Prodleva mezi trojicemi" }, 
   "#LNG_DelayBetweenWords": { "ENG" : "Delay between words", "CZ" : "Prodleva mezi slovy" }, 
   "#LNG_Description": { "ENG" : "Appp translates text plays it out in Braille Morse", "CZ" : "Aplikace přeloží text a přehraje v Braillské morzeovce" }, 
-  "#LNG_DotSound": { "ENG" : "Dot sound", "CZ" : "Zvuk tečky" }, 
+  "#LNG_DotSound": { "ENG" : "Dot Sound", "CZ" : "Zvuk tečky" }, 
   "#LNG_EnterSomeText": { "ENG" : "Enter some text to translate and play in Braille Morse", "CZ" : "Zadejte text pro překlad a přehrání v Braillské morzeovce" }, 
-  "#LNG_NoDotSound": { "ENG" : "No dot sound", "CZ" : "Zvuk prázdného místa" }, 
+  "#LNG_EmptyDotSound": { "ENG" : "Empty Dot Sound", "CZ" : "Zvuk prázdné tečky" }, 
   "#LNG_Pause": { "ENG" : "Pause", "CZ" : "Pauza" }, 
   "#LNG_Play": { "ENG" : "Play", "CZ" : "Přehraj" }, 
   "#LNG_Settings": { "ENG" : "Settings", "CZ" : "Nastavení" }, 
@@ -559,5 +559,5 @@ const langDictionary = {
   "#LNG_ToggleVisualTranslation": { "ENG" : "Show / hide visual Braille Translation", "CZ" : "Zobrazí / schová braillský překlad" }, 
   "#LNG_YourMessage": { "ENG" : "Your message", "CZ" : "Vaše zpráva" }, 
   "#LNG_ZoomIn": { "ENG" : "Zoom in", "CZ" : "Přiblížit" }, 
-  "#LNG_ZoonOut": { "ENG" : "Zoom out", "CZ" : "Oddálit" }, 
+  "#LNG_ZoonOut": { "ENG": "Zoom out", "CZ": "Oddálit" },
 };

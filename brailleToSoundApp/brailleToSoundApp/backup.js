@@ -20,10 +20,10 @@ window.onload = () => {
 
 // Init
 app.init = async function () {
-  await app.getSettingsFromLocalStorage();
-  await app.translateToPreferredLanguage(app.preferredLanguage);
   await app.bindObjects();
   await app.bindEvents();
+  await app.getSettingsFromLocalStorage();
+  await app.translateToPreferredLanguage(app.preferredLanguage);
   app.assignValuesToSettingsInputs();
   app.triggerInputEvent();
 };
@@ -191,6 +191,8 @@ app.translateText = function (txt) {
 
 // plays text from app.remainingTextToPlay variable
 app.playText = async function () {
+  await app.dotSoundAudioControl.load();
+  await app.noDotSoundAudioControl.load();
   let position = app.playSoundPaused[1];
   while (app.remainingTextToPlay.length > 0) {
     if (app.playSoundPaused[0] || app.playSoundStopped) {
@@ -398,24 +400,19 @@ app.getSettingsFromLocalStorage = function () {
   app.translationTableZoom = localStorage.getItem('translationTableZoom');
 
   // Default values
-  if (app.preferredLanguage === null || app.preferredLanguage === '')
+  if (app.preferredLanguage === null)
     app.preferredLanguage = app.defSett.language;
  
-  if (app.dotSoundFileName === null || app.dotSoundFileName === '')
+  if (app.dotSoundFileName === null)
     app.dotSoundFileName = 'ftus_instrument_drum_small_gamelan_hit_stick_single_001_477.mp3';
-  if (app.noDotSoundFileName === null || app.noDotSoundFileName === '')
+  if (app.noDotSoundFileName === null)
     app.noDotSoundFileName = 'ftus_musical_instrument_ching_gamelan_single_hit_001_529.mp3';
-  if (app.delayBtwSounds === null)
-    app.delayBtwSounds = app.deffSet.delayBtwSounds;
+  if (app.delayBtwSounds === null) app.delayBtwSounds = app.deffSet.delayBtwSounds;
 
-  if (app.delayBtwTriples === null || app.delayBtwTriples === '')
-    app.delayBtwTriples = app.deffSet.delayBtwTriples;
-  if (app.delayBtwChars === null || app.delayBtwChars === '')
-    app.delayBtwChars = app.deffSet.delayBtwChars;
-  if (app.delayBtwWords === null || app.delayBtwWords === '')
-    app.delayBtwWords = app.deffSet.delayBtwWords;
-  if (app.translationTableZoom === null || app.translationTableZoom === '')
-    app.translationTableZoom = app.deffSet.translationTableZoom;
+  if (app.delayBtwTriples === null) app.delayBtwTriples = app.deffSet.delayBtwTriples;
+  if (app.delayBtwChars === null) app.delayBtwChars = app.deffSet.delayBtwChars;
+  if (app.delayBtwWords === null) app.delayBtwWords = app.deffSet.delayBtwWords;
+  if (app.translationTableZoom === null) app.translationTableZoom = app.deffSet.translationTableZoom;
 };
 
 app.saveSettingsToLocalStorage = function () {

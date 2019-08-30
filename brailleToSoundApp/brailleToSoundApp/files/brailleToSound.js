@@ -13,19 +13,20 @@ app.defSett.delayBtwChars = 1250;
 app.defSett.delayBtwWords = 2000;
 app.defSett.translationTableZoom = 0.2;
 
-
 window.onload = () => {
   app.init();
 };
 
 // Init
 app.init = async function () {
+  document.getElementById('turnOnJSWarning').innerHTML = '';
   await app.getSettingsFromLocalStorage();
   await app.translateToPreferredLanguage(app.preferredLanguage);
   await app.bindObjects();
   await app.bindEvents();
   app.assignValuesToSettingsInputs();
   app.triggerInputEvent();
+
 };
 
 function to(promise) {
@@ -115,18 +116,163 @@ function convertArrayToTable(arr) {
   return table;
 }
 
+app.bindObjects = async function () {
+  // Identifying important controls and binding them to variables
+  app.mainDiv = document.querySelector('div.main');
+
+  app.originalTextInput = document.getElementById("originalText");
+
+  app.btnToggleBrailleTranslation = document.getElementById("btnToggleBrailleTranslation");
+  app.brailleTranslationDiv = document.getElementById("brailleTranslationDiv");
+  app.btnZoomIn = document.getElementById("btnZoomIn");
+  app.btnZoomOut = document.getElementById("btnZoomOut");
+
+  app.dotSoundInput = document.querySelector('#dotSoundInput');
+  app.dotSoundAudioControl = document.querySelector('#dotSoundAudioControl');
+  app.dotSoundAudioControlSource = document.querySelector('#dotSoundAudioControl source');
+
+  app.noDotSoundInput = document.querySelector('#noDotSoundInput');
+  app.noDotSoundAudioControl = document.querySelector('#noDotSoundAudioControl');
+  app.noDotSoundAudioControlSource = document.querySelector('#noDotSoundAudioControl source');
+
+  app.delayBtwSoundsInput = document.querySelector('#delayBtwSounds');
+  app.delayBtwTriplesInput = document.querySelector('#delayBtwTriples');
+  app.delayBtwCharsInput = document.querySelector('#delayBtwChars');
+  app.delayBtwWordsInput = document.querySelector('#delayBtwWords');
+
+  app.settingsDiv = document.querySelector('#settingsDiv');
+  app.btnToggleSettings = document.querySelector('#btnToggleSettings');
+  app.soundControlsDiv = document.querySelector('#soundControlsDiv');
+  app.btnToggleSoundControls = document.querySelector('#btnToggleSoundControls');
+};
+
+// Binding events to controls
+app.bindEvents = async function () {
+  document.getElementById("btnLangs").addEventListener('click', app.translateClick);
+  document.getElementById("originalText").addEventListener(
+    "input", async () => {
+      let translatedText = app.translateText(app.originalTextInput.value);
+      app.remainingTextToPlay = translatedText.toString().replace(/ /g, '');
+
+      let newArr = convertTextToTableArray(translatedText);
+      let brailleTranslationDiv = document.getElementById("brailleTranslationDiv");
+      while (brailleTranslationDiv.firstChild) {
+        brailleTranslationDiv.removeChild(brailleTranslationDiv.firstChild);
+      }
+      let table = convertArrayToTable(newArr);
+      table.setAttribute('id', 'brailleTranslationTable');
+
+      brailleTranslationDiv.appendChild(table);
+      table.style.zoom = app.translationTableZoom;
+    }
+  );
+
+  document.getElementById("btnPlayAudio").addEventListener(
+    "click", () => {
+      app.triggerInputEvent();
+      app.playAudio();
+    }
+  );
+  document.getElementById("btnPauseAudio").addEventListener(
+    "click", async () => {
+      if (app.playSoundPaused[0] === false) app.playSoundPaused[0] = true;
+      else {
+        app.playSoundPaused[0] = false;
+        await app.updateSettingsValues();
+        await app.playText();
+      }
+    }
+  );
+  document.getElementById("btnStopAudio").addEventListener(
+    "click", () => {
+      app.playSoundStopped = true;
+      app.remainingTextToPlay = '';
+    }
+  );
+  app.btnZoomIn.addEventListener(
+    "click", () => {
+      app.translationTableZoom = app.translationTableZoom * 1.1;
+      app.saveSettingsToLocalStorage();
+      document.getElementById("brailleTranslationTable").style.zoom = app.translationTableZoom;
+    }
+  );
+  app.btnZoomOut.addEventListener(
+    "click", () => {
+      app.translationTableZoom = app.translationTableZoom * 0.9;
+      app.saveSettingsToLocalStorage();
+      document.getElementById("brailleTranslationTable").style.zoom = app.translationTableZoom;
+    }
+  );
+
+  app.btnToggleBrailleTranslation.addEventListener(
+    "click", () => {
+      toggleElement(app.brailleTranslationDiv);
+      toggleElement(app.btnZoomIn.parentNode);
+      if (app.btnToggleBrailleTranslation.getAttribute('aria-pressed') === 'false')
+        app.btnToggleBrailleTranslation.setAttribute('aria-pressed', 'true');
+      else app.btnToggleBrailleTranslation.setAttribute('aria-pressed', 'false');
+    }
+  );
+
+  app.soundControlsDiv.style.display = 'none';
+  app.btnToggleSoundControls.addEventListener(
+    "click", () => {
+      toggleElement(app.soundControlsDiv);
+      if (app.btnToggleSoundControls.getAttribute('aria-pressed') === 'false')
+        app.btnToggleSoundControls.setAttribute('aria-pressed', 'true');
+      else app.btnToggleSoundControls.setAttribute('aria-pressed', 'false');
+    }
+  );
+  app.settingsDiv.style.display = 'none'; // for some reason when doing the css the click only worked for the second time
+  app.btnToggleSettings.addEventListener(
+    "click", () => {
+      toggleElement(app.settingsDiv);
+      if (app.btnToggleSettings.getAttribute('aria-pressed') === 'false')
+        app.btnToggleSettings.setAttribute('aria-pressed', 'true');
+      else app.btnToggleSettings.setAttribute('aria-pressed', 'false');
+    }
+  );
+  app.dotSoundInput.addEventListener(
+    "change", () => {
+      let fileName = app.dotSoundInput.value;
+      fileName = fileName.replace(/^.*[\\\/]/, '');
+      app.dotSoundAudioControlSource.setAttribute('src', './sounds/' + fileName);
+      app.dotSoundAudioControl.load();
+    }
+  );
+  app.noDotSoundInput.addEventListener(
+    "change", () => {
+      let fileName = app.noDotSoundInput.value.replace(/^.*[\\\/]/, '');
+      app.noDotSoundFileName = filename;
+      app.saveSettingsToLocalStorage();
+      app.noDotSoundAudioControlSource.setAttribute('src', './sounds/' + fileName);
+      app.noDotSoundAudioControl.load();
+    }
+  );
+  app.delayBtwSoundsInput.addEventListener('change', app.updateSettingsValues);
+  app.delayBtwTriplesInput.addEventListener('change', app.updateSettingsValues);
+  app.delayBtwCharsInput.addEventListener('change', app.updateSettingsValues);
+  app.delayBtwWordsInput.addEventListener('change', app.updateSettingsValues);
+
+};
+
+
 // Translate to preferred language
 app.translateToPreferredLanguage = async function (language) {
-  for (let key in app.langDictionary) {
+  document.body.style.display = 'none';
+  for (let key in langDictionary) {
     let translation = '';
-    for (let lng in app.langDictionary[key]) {
+    for (let lng in langDictionary[key]) {
       if (lng === language) {
-        translation = app.langDictionary[key][lng];
-        document.body.innerHTML = document.body.innerHTML.replace(key, translation);
-        document.head.innerHTML = document.head.innerHTML.replace(key, translation);
+        translation = langDictionary[key][lng];
+        let re = new RegExp(key, 'g');
+        document.body.innerHTML = document.body.innerHTML.replace(re, translation);
+        document.head.innerHTML = document.head.innerHTML.replace(re, translation);
       }
     }
   }
+  document.body.style.display = 'block';
+
 };
 
 app.triggerInputEvent = function () {
@@ -136,6 +282,12 @@ app.triggerInputEvent = function () {
     'cancelable': true
   });
   document.getElementById("originalText").dispatchEvent(event);
+};
+
+app.translateClick = function () {
+  app.preferredLanguage = this.value;
+  app.saveSettingsToLocalStorage();
+  location.reload(false);
 };
 
 app.playDotSound = async function () {
@@ -231,142 +383,7 @@ app.playAudio = async function () {
   await app.playText();
 };
 
-app.bindObjects = async function () {
-  // Identifying important controls and binding them to variables
-  app.originalTextInput = document.getElementById("originalText");
 
-  app.btnToggleBrailleTranslation = document.getElementById("btnToggleBrailleTranslation");
-  app.brailleTranslationDiv = document.getElementById("brailleTranslationDiv");
-  app.btnZoomIn = document.getElementById("btnZoomIn");
-  app.btnZoomOut = document.getElementById("btnZoomOut");
-
-  app.dotSoundInput = document.querySelector('#dotSoundInput');
-  app.dotSoundAudioControl = document.querySelector('#dotSoundAudioControl');
-  app.dotSoundAudioControlSource = document.querySelector('#dotSoundAudioControl source');
-
-  app.noDotSoundInput = document.querySelector('#noDotSoundInput');
-  app.noDotSoundAudioControl = document.querySelector('#noDotSoundAudioControl');
-  app.noDotSoundAudioControlSource = document.querySelector('#noDotSoundAudioControl source');
-
-  app.delayBtwSoundsInput = document.querySelector('#delayBtwSounds');
-  app.delayBtwTriplesInput = document.querySelector('#delayBtwTriples');
-  app.delayBtwCharsInput = document.querySelector('#delayBtwChars');
-  app.delayBtwWordsInput = document.querySelector('#delayBtwWords');
-
-  app.settingsDiv = document.querySelector('#settingsDiv');
-  app.btnToggleSettings = document.querySelector('#btnToggleSettings');
-  app.soundControlsDiv = document.querySelector('#soundControlsDiv');
-  app.btnToggleSoundControls = document.querySelector('#btnToggleSoundControls');
-};
-
-// Binding events to controls
-app.bindEvents = async function () {
-  document.getElementById("originalText").addEventListener(
-    "input", async () => {
-      let translatedText = app.translateText(app.originalTextInput.value);
-      app.remainingTextToPlay = translatedText.toString().replace(/ /g, '');
-
-      let newArr = convertTextToTableArray(translatedText);
-      let brailleTranslationDiv = document.getElementById("brailleTranslationDiv");
-      while (brailleTranslationDiv.firstChild) {
-        brailleTranslationDiv.removeChild(brailleTranslationDiv.firstChild);
-      }
-      let table = convertArrayToTable(newArr);
-      table.setAttribute('id', 'brailleTranslationTable');
-
-      brailleTranslationDiv.appendChild(table);
-      table.style.zoom = app.translationTableZoom;
-    }
-  );
-
-  document.getElementById("btnPlayAudio").addEventListener(
-    "click", () => {
-      app.triggerInputEvent();
-      app.playAudio();
-    }
-  );
-  document.getElementById("btnPauseAudio").addEventListener(
-    "click", async () => {
-      if (app.playSoundPaused[0] === false) app.playSoundPaused[0] = true;
-      else {
-        app.playSoundPaused[0] = false;
-        await app.updateSettingsValues();
-        await app.playText();
-      }
-    }
-  );
-  document.getElementById("btnStopAudio").addEventListener(
-    "click", () => {
-      app.playSoundStopped = true;
-      app.remainingTextToPlay = '';
-    }
-  );
-  app.btnZoomIn.addEventListener(
-    "click", () => {
-      app.translationTableZoom = app.translationTableZoom * 1.1;
-      app.saveSettingsToLocalStorage();
-      document.getElementById("brailleTranslationTable").style.zoom = app.translationTableZoom;
-    }
-  );
-  app.btnZoomOut.addEventListener(
-    "click", () => {
-      app.translationTableZoom = app.translationTableZoom * 0.9;
-      app.saveSettingsToLocalStorage();
-      document.getElementById("brailleTranslationTable").style.zoom = app.translationTableZoom;
-    }
-  );
-
-  app.btnToggleBrailleTranslation.addEventListener(
-    "click", () => {
-      toggleElement(app.brailleTranslationDiv);
-      toggleElement(app.btnZoomIn.parentNode);
-      if (app.btnToggleBrailleTranslation.getAttribute('aria-pressed') === 'false')
-        app.btnToggleBrailleTranslation.setAttribute('aria-pressed', 'true');
-      else app.btnToggleBrailleTranslation.setAttribute('aria-pressed', 'false');
-    }
-  );
-
-  app.soundControlsDiv.style.display = 'none';
-  app.btnToggleSoundControls.addEventListener(
-    "click", () => {
-      toggleElement(app.soundControlsDiv);
-      if (app.btnToggleSoundControls.getAttribute('aria-pressed') === 'false' )
-        app.btnToggleSoundControls.setAttribute('aria-pressed', 'true');
-      else app.btnToggleSoundControls.setAttribute('aria-pressed', 'false');
-    }
-  );
-  app.settingsDiv.style.display = 'none'; // for some reason when doing the css the click only worked for the second time
-  app.btnToggleSettings.addEventListener(
-      "click", () => {
-      toggleElement(app.settingsDiv);
-      if (app.btnToggleSettings.getAttribute('aria-pressed') === 'false' )
-        app.btnToggleSettings.setAttribute('aria-pressed', 'true');
-      else app.btnToggleSettings.setAttribute('aria-pressed', 'false');
-    } 
-  );
-  app.dotSoundInput.addEventListener(
-    "change", () => {
-      let fileName = app.dotSoundInput.value;
-      fileName = fileName.replace(/^.*[\\\/]/, '');
-      app.dotSoundAudioControlSource.setAttribute('src', './sounds/' + fileName);
-      app.dotSoundAudioControl.load();
-    }
-  );
-  app.noDotSoundInput.addEventListener(
-    "change", () => {
-      let fileName = app.noDotSoundInput.value.replace(/^.*[\\\/]/, '');
-      app.noDotSoundFileName = filename;
-      app.saveSettingsToLocalStorage();
-      app.noDotSoundAudioControlSource.setAttribute('src', './sounds/' + fileName);
-      app.noDotSoundAudioControl.load();
-    }
-  );
-  app.delayBtwSoundsInput.addEventListener('change', app.updateSettingsValues);
-  app.delayBtwTriplesInput.addEventListener('change', app.updateSettingsValues);
-  app.delayBtwCharsInput.addEventListener('change', app.updateSettingsValues);
-  app.delayBtwWordsInput.addEventListener('change', app.updateSettingsValues);
-
-};
 
 app.updateSettingsValues = function () {
   app.dotSoundFileName = app.dotSoundInput.value.replace(/^.*[\\\/]/, '');
@@ -388,7 +405,7 @@ app.assignValuesToSettingsInputs = function () {
 };
 
 app.getSettingsFromLocalStorage = function () {
-  app.preferredLanguage = localStorage.getItem('preferredLanguage'); 
+  app.preferredLanguage = localStorage.getItem('preferredLanguage');
   app.dotSoundFileName = localStorage.getItem('dotSoundFileName');
   app.noDotSoundFileName = localStorage.getItem('noDotSoundFileName');
   app.delayBtwSounds = localStorage.getItem('delayBtwSounds');
@@ -400,7 +417,7 @@ app.getSettingsFromLocalStorage = function () {
   // Default values
   if (app.preferredLanguage === null || app.preferredLanguage === '')
     app.preferredLanguage = app.defSett.language;
- 
+
   if (app.dotSoundFileName === null || app.dotSoundFileName === '')
     app.dotSoundFileName = 'ftus_instrument_drum_small_gamelan_hit_stick_single_001_477.mp3';
   if (app.noDotSoundFileName === null || app.noDotSoundFileName === '')
@@ -519,27 +536,28 @@ const brailleMapSpecial = {
   "numberEnd": "011000"
 };
 
-app.langDictionary = {
-  "#LNG_Title": { "ENG": "Text to Braille to Braille Morse Translator", "CZ": "Překladač textu do brailské morzeovky" },
-  "#LNG_Description": { "ENG": "Appp translates text plays it out in Braille Morse", "CZ": "Aplikace přeloží text a přehraje v Braillské morzeovce" },
-  "#LNG_YourMessage": { "ENG": "Your message", "CZ": "Vaše zpráva" },
-  "#LNG_EnterSomeText": { "ENG": "Enter some text to translate and play in Braille Morse", "CZ": "Zadejte text pro překlad a přehrání v Braillské morzeovce" },
-  "#LNG_Play": { "ENG": "Play", "CZ": "Přehraj" },
-  "#LNG_Pause": { "ENG": "Pause", "CZ": "Pauza" },
-  "#LNG_Stop": { "ENG": "Stop", "CZ": "Stop" },
-  "#LNG_BrailleTranslation": { "ENG": "Braille translation", "CZ": "Braillský překlad" },
-  "#LNG_ToggleVisualTranslation": { "ENG": "Show / hide visual Braille Translation", "CZ": "Zobrazí / schová braillský překlad" },
-  "#LNG_ZoomIn": { "ENG": "Zoom in", "CZ": "Přiblížit" },
-  "#LNG_ZoonOut": { "ENG": "Zoom out", "CZ": "Oddálit" },
-  "#LNG_SoundControls": { "ENG": "Sound Controls", "CZ": "Ovladače zvuku" },
-  "#LNG_ToggleSoundControls": { "ENG": "Show / hide sound controls", "CZ": "Zobrazí / schová ovládače zvuku" },
-  "#LNG_Settings": { "ENG": "Settings", "CZ": "Nastavení" },
-  "#LNG_ToggleSettings": { "ENG": "Show/hide settings", "CZ": "Zobrazí/schová nastavení" },
-  "#LNG_DoSound": { "ENG": "Dot sound", "CZ": "Zvuk tečky" },
-  "#LNG_NoDotSound": { "ENG": "No dot sound", "CZ": "Zvuk prázdného místa" },
-  "#LNG_Change_Imperative": { "ENG": "Change", "CZ": "Změň" },
-  "#LNG_DelayBetweenSounds": { "ENG": "Delay between sounds", "CZ": "Prodleva mezi zvuky" },
-  "#LNG_DelayBetweenTriples": { "ENG": "Delay between triples", "CZ": "Prodleva mezi trojicemi" },
-  "#LNG_DelayBetweenCharacters": { "ENG": "Delay between characters", "CZ": "Prodleva mezi písmeny" },
-  "#LNG_DelayBetweenWords": { "ENG": "Delay between words", "CZ": "Prodleva mezi slovy" },
+const langDictionary = {
+  "#LNG_BrailleTranslation": { "ENG" : "Braille translation", "CZ" : "Braillský překlad" }, 
+  "#LNG_Change_Imperative": { "ENG" : "Change", "CZ" : "Změň" }, 
+  "#LNG_Choice": { "ENG" : "CZ", "CZ" : "ENG" }, 
+  "#LNG_DelayBetweenCharacters": { "ENG" : "Delay between characters", "CZ" : "Prodleva mezi písmeny" }, 
+  "#LNG_DelayBetweenSounds": { "ENG" : "Delay between sounds", "CZ" : "Prodleva mezi zvuky" }, 
+  "#LNG_DelayBetweenTriples": { "ENG" : "Delay between triples", "CZ" : "Prodleva mezi trojicemi" }, 
+  "#LNG_DelayBetweenWords": { "ENG" : "Delay between words", "CZ" : "Prodleva mezi slovy" }, 
+  "#LNG_Description": { "ENG" : "Appp translates text plays it out in Braille Morse", "CZ" : "Aplikace přeloží text a přehraje v Braillské morzeovce" }, 
+  "#LNG_DotSound": { "ENG" : "Dot sound", "CZ" : "Zvuk tečky" }, 
+  "#LNG_EnterSomeText": { "ENG" : "Enter some text to translate and play in Braille Morse", "CZ" : "Zadejte text pro překlad a přehrání v Braillské morzeovce" }, 
+  "#LNG_NoDotSound": { "ENG" : "No dot sound", "CZ" : "Zvuk prázdného místa" }, 
+  "#LNG_Pause": { "ENG" : "Pause", "CZ" : "Pauza" }, 
+  "#LNG_Play": { "ENG" : "Play", "CZ" : "Přehraj" }, 
+  "#LNG_Settings": { "ENG" : "Settings", "CZ" : "Nastavení" }, 
+  "#LNG_SoundControls": { "ENG" : "Sound Controls", "CZ" : "Ovladače zvuku" }, 
+  "#LNG_Stop": { "ENG" : "Stop", "CZ" : "Stop" }, 
+  "#LNG_Title": { "ENG" : "Braille to Braille-Morse Translator", "CZ" : "Překladač do braillské morzeovky" }, 
+  "#LNG_ToggleSettings": { "ENG" : "Show/hide settings", "CZ" : "Zobrazí/schová nastavení" }, 
+  "#LNG_ToggleSoundControls": { "ENG" : "Show / hide sound controls", "CZ" : "Zobrazí / schová ovládače zvuku" }, 
+  "#LNG_ToggleVisualTranslation": { "ENG" : "Show / hide visual Braille Translation", "CZ" : "Zobrazí / schová braillský překlad" }, 
+  "#LNG_YourMessage": { "ENG" : "Your message", "CZ" : "Vaše zpráva" }, 
+  "#LNG_ZoomIn": { "ENG" : "Zoom in", "CZ" : "Přiblížit" }, 
+  "#LNG_ZoonOut": { "ENG" : "Zoom out", "CZ" : "Oddálit" }, 
 };

@@ -13,13 +13,15 @@
   <script type="text/javascript" charset="utf-8" src="brailleToSound.js"></script>
   <link rel="stylesheet" type="text/css" href="brailleToSound.css" />
 </head>
-
 <body>
-
   <div class='main'>
     <h1>#LNG_Title</h1>
 
     <div class="displayBlock">
+      <input type="button" class=squaredButton id="btnLangs" value="#LNG_Choice" 
+        aria-label="#LNG_Change language to Czech">
+      </input>      
+
       <label for="originalText">#LNG_YourMessage:</label>
       <textarea id="originalText">#LNG_EnterSomeText</textarea>
 
@@ -49,7 +51,7 @@
 
     <div id="soundControlsDiv">
       <div class="displayBlock">
-        <label for="dotSoundAudioControl">#LNG_DoSound:</label>
+        <label for="dotSoundAudioControl">#LNG_DotSound:</label>
         <audio controls id="dotSoundAudioControl">
           <source src='./sounds/ftus_instrument_drum_small_gamelan_hit_stick_single_001_477.mp3'>
           Your browser does not support the
@@ -71,7 +73,7 @@
 
     <div id="settingsDiv">
       <div class="displayBlock">
-        <label for="dotSoundInput">#LNG_Change_Imperative #LNG_DoSound:</label>
+        <label for="dotSoundInput">#LNG_Change_Imperative #LNG_DotSound:</label>
         <input type="file" id="dotSoundInput" name="dotSoundFPath">
 
         <label for="noDotSoundInput">#LNG_Change_Imperative #LNG_NoDotSound:</label>
@@ -96,5 +98,5 @@
 
 
 </body>
-
+<div id="turnOnJSWarning">Please enable javascript</div>
 </html>

@@ -1,7 +1,11 @@
+body {
+  display:none
+}
+
 div.main {
   margin-left: 10%;
-  /* margin-top: 10%; */
-  width:500px
+  width:500px;
+  /* display: none; */
 }
 
 textarea {
@@ -11,16 +15,11 @@ textarea {
   border: 1px solid;
 }
 
-
 input[type="button"] {
   background-color: white;
   font-weight: 545;  
   border: 1px solid black
 }
-
-/* div.displayBlock { */
-  /* margin-top: 35px; */
-/* } */
 
 div.displayInline > * {
   display: inline-block;

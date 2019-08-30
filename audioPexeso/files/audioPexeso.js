@@ -61,12 +61,12 @@ app.bindObjectsAndEvents = async function () {
 app.getSettingsFromLocalStorage = async function () {
   let p;
   p = localStorage.getItem('players');
-  app.players = (p !== null) ? p.split(',') : app.set.defPlayersList;
+  app.players = (p !== null && p!== '') ? p.split(',') : app.set.defPlayersList;
   p = localStorage.getItem('noOfSounds');
-  app.noOfSounds = (p !== null) ? p : app.set.defNumberOfSounds;
+  app.noOfSounds = (p !== null && p!== '') ? p : app.set.defNumberOfSounds;
   if (app.noOfSounds > app.maxNumberOfSounds) app.noOfSounds = app.maxNumberOfSounds;
   p = localStorage.getItem('preferredLanguage');
-  app.preferredLanguage = (p !== null) ? p : app.set.defLanguage;
+  app.preferredLanguage = (p !== null && p!== '') ? p : app.set.defLanguage;
 };
 
 // Save settings to browser's local storage

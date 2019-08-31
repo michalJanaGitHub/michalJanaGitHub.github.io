@@ -5,6 +5,10 @@
 
 let app = {};
 app.playSoundPaused = [];
+app.about = {};
+app.about.version = '0.9.1';
+app.about.author = 'Michal Jána';
+app.about.contact = 'michal.jana@hotmail.com';
 app.defSett = {};
 app.defSett.language = "ENG";
 app.defSett.delayBtwSounds = 0;
@@ -253,7 +257,9 @@ app.bindEvents = async function () {
   app.delayBtwTriplesInput.addEventListener('change', app.updateSettingsValues);
   app.delayBtwCharsInput.addEventListener('change', app.updateSettingsValues);
   app.delayBtwWordsInput.addEventListener('change', app.updateSettingsValues);
-
+  document.querySelector('#btnAbout').addEventListener('click', () => {
+    alert(`version: ${app.about.version}0.9.1\nauthor: ${app.about.author}\ncontact: ${app.about.contact}`);
+  });
 };
 
 
@@ -537,6 +543,7 @@ const brailleMapSpecial = {
 };
 
 const langDictionary = {
+  "#LNG_About": { "ENG" : "About", "CZ" : "O programu" }, 
   "#LNG_BrailleTranslation": { "ENG" : "Braille translation", "CZ" : "Braillský překlad" }, 
   "#LNG_Change_Imperative": { "ENG" : "Change", "CZ" : "Změň" }, 
   "#LNG_ChangeLanguageToCzech": { "ENG" : "Zobraz v češtině", "CZ" : "Display in English" }, 
@@ -546,6 +553,7 @@ const langDictionary = {
   "#LNG_DelayBetweenTriples": { "ENG" : "Delay between triples", "CZ" : "Prodleva mezi trojicemi" }, 
   "#LNG_DelayBetweenWords": { "ENG" : "Delay between words", "CZ" : "Prodleva mezi slovy" }, 
   "#LNG_Description": { "ENG" : "Appp translates text plays it out in Braille Morse", "CZ" : "Aplikace přeloží text a přehraje v Braillské morzeovce" }, 
+  "#LNG_DisplayInfoAboutProgram": { "ENG" : "Show infor about program", "CZ" : "Zobrazí informace o programu" }, 
   "#LNG_DotSound": { "ENG" : "Dot Sound", "CZ" : "Zvuk tečky" }, 
   "#LNG_EmptyDotSound": { "ENG" : "Empty Dot Sound", "CZ" : "Zvuk prázdné tečky" }, 
   "#LNG_EnterSomeText": { "ENG" : "Enter some text to translate and play in Braille Morse", "CZ" : "Zadejte text pro překlad a přehrání v Braillské morzeovce" }, 
@@ -560,6 +568,5 @@ const langDictionary = {
   "#LNG_ToggleVisualTranslation": { "ENG" : "Show / hide visual Braille Translation", "CZ" : "Zobrazí / schová braillský překlad" }, 
   "#LNG_YourMessage": { "ENG" : "Your message", "CZ" : "Vaše zpráva" }, 
   "#LNG_ZoomIn": { "ENG" : "Zoom in", "CZ" : "Přiblížit" }, 
-  "#LNG_ZoonOut": { "ENG" : "Zoom out", "CZ" : "Oddálit" }, 
-  
+  "#LNG_ZoonOut": { "ENG": "Zoom out", "CZ": "Oddálit" },
 };

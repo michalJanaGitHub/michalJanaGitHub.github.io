@@ -258,7 +258,7 @@ app.bindEvents = async function () {
   app.delayBtwCharsInput.addEventListener('change', app.updateSettingsValues);
   app.delayBtwWordsInput.addEventListener('change', app.updateSettingsValues);
   document.querySelector('#btnAbout').addEventListener('click', () => {
-    alert(`version: ${app.about.version}0.9.1\nauthor: ${app.about.author}\ncontact: ${app.about.contact}`);
+    alert(`author: ${app.about.author}\ncontact: ${app.about.contact}`);
   });
 };
 

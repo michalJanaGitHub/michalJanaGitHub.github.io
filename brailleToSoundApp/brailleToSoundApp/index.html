@@ -13,25 +13,23 @@
   <script type="text/javascript" charset="utf-8" src="brailleToSound.js"></script>
   <link rel="stylesheet" type="text/css" href="brailleToSound.css" />
 </head>
+
 <body>
   <div class='main'>
     <h1>#LNG_Title</h1>
 
     <div class="displayBlock">
-      <input type="button" class=squaredButton id="btnLangs" value="#LNG_Choice" 
+      <input type="button" class=squaredButton id="btnLangs" value="#LNG_Choice"
         aria-label="#LNG_ChangeLanguageToCzech">
-      </input>      
+      </input>
 
       <label for="originalText">#LNG_YourMessage:</label>
       <textarea id="originalText">#LNG_EnterSomeText</textarea>
 
       <div class="displayInline">
-        <input id="btnPlayAudio" type="button" value="#LNG_Play" 
-          aria-label="#LNG_Play audio"></input>
-        <input id="btnPauseAudio" type="button" value="#LNG_Pause" 
-          aria-label="#LNG_Pause audio"></input>
-        <input id="btnStopAudio" type="button" value="#LNG_Stop" 
-          aria-label="#LNG_Stop audio"></input>
+        <input id="btnPlayAudio" type="button" value="#LNG_Play" aria-label="#LNG_Play audio"></input>
+        <input id="btnPauseAudio" type="button" value="#LNG_Pause" aria-label="#LNG_Pause audio"></input>
+        <input id="btnStopAudio" type="button" value="#LNG_Stop" aria-label="#LNG_Stop audio"></input>
       </div>
 
       <input type="button" id="btnToggleBrailleTranslation" value="#LNG_BrailleTranslation"
@@ -45,8 +43,8 @@
       </div>
     </div>
 
-    <input type="button" id="btnToggleSoundControls" value="#LNG_SoundControls"
-      aria-label="#LNG_ToggleSoundControls" aria-pressed="false">
+    <input type="button" id="btnToggleSoundControls" value="#LNG_SoundControls" aria-label="#LNG_ToggleSoundControls"
+      aria-pressed="false">
     </input>
 
     <div id="soundControlsDiv">
@@ -73,12 +71,14 @@
 
     <div id="settingsDiv">
       <div class="displayBlock">
-        <label for="dotSoundInput">#LNG_Change_Imperative #LNG_DotSound:</label>
-        <input type="file" id="dotSoundInput" name="dotSoundFPath">
+        <div style="display:none">
+          <!-- notworking yet -->
+          <label for="dotSoundInput">#LNG_Change_Imperative #LNG_DotSound:</label>
+          <input type="file" id="dotSoundInput" name="dotSoundFPath">
 
-        <label for="noDotSoundInput">#LNG_Change_Imperative #LNG_EmptyDotSound:</label>
-        <input type="file" id="noDotSoundInput" name="dotSound">
-
+          <label for="noDotSoundInput">#LNG_Change_Imperative #LNG_EmptyDotSound:</label>
+          <input type="file" id="noDotSoundInput" name="dotSound">
+        </div>
         <label for="delayBtwSounds">#LNG_DelayBetweenSounds:</label>
         <input id='delayBtwSounds' type="number" min=0 max=3000>
 
@@ -94,9 +94,8 @@
       </div>
     </div>
 
-    <input class="displayBlock" type="button" id="btnAbout" value="#LNG_About"
-    aria-label="#LNG_ShowInfoAboutProgram">
-  </input>
+    <input class="displayBlock" type="button" id="btnAbout" value="#LNG_About" aria-label="#LNG_ShowInfoAboutProgram">
+    </input>
 
   </div>
 
@@ -104,7 +103,11 @@
 <div id="turnOnJSWarning">Please enable javascript</div>
 <!-- shttps://www.freecounterstat.com/geozoom.php?c=48d2ckzahjl5szshk5ddafkc7efjegx7&base=counter7 -->
 <div id="sfc48d2ckzahjl5szshk5ddafkc7efjegx7"></div>
-<script type="text/javascript" src="https://counter7.wheredoyoucomefrom.ovh/private/counter.js?c=48d2ckzahjl5szshk5ddafkc7efjegx7&down=async" async></script>
-<noscript><a href="https://www.freecounterstat.com" title="web counter"><img src="https://counter7.wheredoyoucomefrom.ovh/private/freecounterstat.php?c=48d2ckzahjl5szshk5ddafkc7efjegx7" border="0" title="web counter" alt="web counter"></a></noscript>
+<script type="text/javascript"
+  src="https://counter7.wheredoyoucomefrom.ovh/private/counter.js?c=48d2ckzahjl5szshk5ddafkc7efjegx7&down=async"
+  async></script>
+<noscript><a href="https://www.freecounterstat.com" title="web counter"><img
+      src="https://counter7.wheredoyoucomefrom.ovh/private/freecounterstat.php?c=48d2ckzahjl5szshk5ddafkc7efjegx7"
+      border="0" title="web counter" alt="web counter"></a></noscript>
 
 </html>

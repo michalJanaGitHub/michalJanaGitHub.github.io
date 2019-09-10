@@ -7,6 +7,10 @@ let fn = {};
 
 // Basic settings
 app.set = {};
+app.about = {};
+app.about.version = '0.9.1';
+app.about.author = 'Michal Jána';
+app.about.contact = 'michal.jana@hotmail.com';
 app.set.minNumberOfSounds = 1;
 app.set.maxNumberOfSounds = 25;
 app.set.defNumberOfSounds = 18;
@@ -25,7 +29,7 @@ window.onload = () => {
 */
 
 app.init = async function () {
-  document.getElementById('turnOnJSWarning').innerHTML = '';
+  document.querySelector('#turnOnJSWarning').style.display = 'none';
   await app.getSettingsFromLocalStorage();
   await app.translateToPreferredLanguage(app.preferredLanguage);
   await app.bindObjectsAndEvents();
@@ -35,7 +39,6 @@ app.init = async function () {
 
 // Translate to preferred language
 app.translateToPreferredLanguage = async function (language) {
-  document.body.style.display = 'none';
   for (let key in app.langDictionary) {
     let translation = '';
     for (let lng in app.langDictionary[key]) {
@@ -46,7 +49,6 @@ app.translateToPreferredLanguage = async function (language) {
       }
     }
   }
-  document.body.style.display = 'block';
 };
 
 // Binds to button clicks etc
@@ -58,18 +60,38 @@ app.bindObjectsAndEvents = async function () {
   document.getElementById("btnNewGame").addEventListener('click', app.startNewGame);
   document.getElementById("btnSettings").addEventListener('click', app.changeSettings);
   document.getElementById("btnLangs").addEventListener('click', app.translateClick);
+  document.getElementById("txtKeyboardEntry")
+    .addEventListener("keyup", function (event) {
+      event.preventDefault();
+      if (event.keyCode === 13) {
+        let p = this.value;
+        if (p === '') return;
+        if (isNaN(p) || p < 1 || p > app.noOfSounds * 2 || p / Math.floor(p) !== 1) {
+          alert("invalid input");
+          return;
+        }
+        let card = document.getElementById(this.value);
+        if (card.style.display === 'none') {
+          alert("Try a different card. this one was already taken"); return;
+        } 
+        document.getElementById(p).click();
+      }
+    });
+  document.querySelector('#btnAbout').addEventListener('click', () => {
+    alert(`author: ${app.about.author}\ncontact: ${app.about.contact}\nfeedback and suggestions are very welcome`);
+  });
 };
 
 // Load settings or default values
 app.getSettingsFromLocalStorage = async function () {
   let p;
   p = localStorage.getItem('players');
-  app.players = (p !== null && p!== '') ? p.split(',') : app.set.defPlayersList;
+  app.players = (p !== null && p !== '') ? p.split(',') : app.set.defPlayersList;
   p = localStorage.getItem('noOfSounds');
-  app.noOfSounds = (p !== null && p!== '') ? p : app.set.defNumberOfSounds;
+  app.noOfSounds = (p !== null && p !== '') ? p : app.set.defNumberOfSounds;
   if (app.noOfSounds > app.maxNumberOfSounds) app.noOfSounds = app.maxNumberOfSounds;
   p = localStorage.getItem('preferredLanguage');
-  app.preferredLanguage = (p !== null && p!== '') ? p : app.set.defLanguage;
+  app.preferredLanguage = (p !== null && p !== '') ? p : app.set.defLanguage;
 };
 
 // Save settings to browser's local storage
@@ -175,9 +197,6 @@ app.createBoard = function (n) {
       butt.setAttribute('value', k);
       butt.addEventListener('click', app.cardClick, false);
       cell.appendChild(butt);
-      // cell.setAttribute('id', k);
-      // cell.innerHTML = k;
-      cell.addEventListener('click', app.cardClick, false);
       if (k === n) break;
     }
     if (k === n) break;
@@ -212,12 +231,12 @@ app.assignSoundsToCards = function () {
   app.usedSoundsArray = fn.shuffleArray(app.soundList).slice(0, app.noOfSounds);
 
   //load all sounds first sot that one doesnt get this error at first click
-  for (let sound of app.usedSoundsArray) { 
+  for (let sound of app.usedSoundsArray) {
     let x = './sounds/' + sound;
     let snd = new Audio();
     snd.src = x;
     snd.load();
-}
+  }
 
   let dubSoundsArray = fn.shuffleArray(app.usedSoundsArray.concat(app.usedSoundsArray));
   let i = 0;
@@ -232,6 +251,7 @@ app.cardClick = async function () {
   if (app.disableCardClick) return;
   app.disableCardClick = true;
   let cardIndex = this.id;
+  if (cardIndex === '') return;
   await app.playChosenCardSound(cardIndex);
 
   // First trial
@@ -349,48 +369,21 @@ app.soundList = [
 ];
 
 app.langDictionary = {
-  "#LNG_New game": {
-    "ENG": "New game",
-    "CZ": "Nová hra"
-  },
-  "#LNG_Start new game": {
-    "ENG": "Start new game",
-    "CZ": "Začít novou hru"
-  },
-  "#LNG_Sett.": {
-    "ENG": "Sett.",
-    "CZ": "Nast."
-  },
-  "#LNG_Open dialog with game parameters": {
-    "ENG": "Open dialog with game parameters",
-    "CZ": "Otevře dialog s parametry hry"
-  },
-  "#LNG_Change language to Czech": {
-    "ENG": "Change language to Czech",
-    "CZ": "Změnit jazy na Anglický"
-  },
-  "#LNG_Score": {
-    "ENG": "Score",
-    "CZ": "Skóre"
-  },
-  "#LNG_CZ": {
-    "ENG": "CZ",
-    "CZ": "ENG"
-  },
-  "#LNG_Audio memory game": {
-    "ENG": "Audio memory game",
-    "CZ": "Pexeso nejen pro nevidomé"
-  },
-  "#LNG_PleaseEnterNoOfCards": {
-      "ENG": "Please enter number of pairs of cards (between min and max)",
-      "CZ": "Prosím zadejte počet dvojic karet (mezi min a max)"
-  },
-  "#LNG_PleaseEnterListOfPlayers": {
-    "ENG": "Please enter list of players divided  by commas",
-    "CZ": "Prosím zadejte seznam hráčů oddělený čárkami"
-  },
-  "#LNG_InvalidNoOCards": {
-    "ENG": "Number of cards must be between min and max",
-    "CZ": "Počet karet musí být mezi min a max"
-  }
+  "#LNG_About": { "ENG": "About", "CZ": "O hře" },
+  "#LNG_Audio memory game": { "ENG": "Audio memory game", "CZ": "Pexeso nejen pro nevidomé" },
+  "#LNG_ChangeLanguageToCzech": { "ENG": "Change language to Czech", "CZ": "Změnit jazy na Anglický" },
+  "#LNG_CZ": { "ENG": "CZ", "CZ": "ENG" },
+  "#LNG_Help": { "ENG": "Help", "CZ": "Náp." },
+  "#LNG_InvalidNoOCards": { "ENG": "Number of cards must be between min and max", "CZ": "Počet karet musí být mezi min a max" },
+  "#LNG_KeyboardEntry": { "ENG": "Keyboard entry", "CZ": "Zadání z klávesnice" },
+  "#LNG_OnTheMove": { "ENG": "on the move", "CZ": "je na tahu" },
+  "#LNG_OpenDialogWithParameters": { "ENG": "Open dialog with game parameters", "CZ": "Otevře dialog s parametry hry" },
+  "#LNG_PleaseEnterListOfPlayers": { "ENG": "Please enter list of players divided  by commas", "CZ": "Prosím zadejte seznam hráčů oddělený čárkami" },
+  "#LNG_PleaseEnterNoOfCards": { "ENG": "Please enter number of pairs of cards (between min and max)", "CZ": "Prosím zadejte počet dvojic karet (mezi min a max)" },
+  "#LNG_PleaseEnterNumber": { "ENG": "Please enter whole number between 1 and max)", "CZ": "Prosím zadejte celé číslo od 1 do max" },
+  "#LNG_Score": { "ENG": "Score", "CZ": "Skóre" },
+  "#LNG_Sett.": { "ENG": "Sett.", "CZ": "Nast." },
+  "#LNG_Show help": { "ENG": "Show help", "CZ": "Zobrazí nápovědu" },
+  "#LNG_Start new game": { "ENG": "Start new game", "CZ": "Začít novou hru" },
+  "#LNG_StartNewGame": { "ENG": "New game", "CZ": "Nová hra" },
 };

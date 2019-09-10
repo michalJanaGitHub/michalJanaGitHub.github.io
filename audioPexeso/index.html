@@ -11,7 +11,7 @@
 
   <!-- <link type="image/x-icon" rel="icon" href="favicon.ico"> -->
   <script type="text/javascript" charset="utf-8" src="audioPexeso.js"></script>
-  <script type="text/javascript" src="lang.js"></script>
+  <!-- <script type="text/javascript" src="lang.js"></script> -->
   <link rel="stylesheet" type="text/css" href="audioPexeso.css" />
 </head>
 
@@ -22,11 +22,17 @@
     <nav>
       <ul id="mainMenu">
         <li><input type="button" class=squaredButton id="btnLangs" value="#LNG_CZ"
-            aria-label="#LNG_Change language to Czech"></input></li>
-        <li><input type="button" class=squaredButton id="btnNewGame" value="#LNG_New game"
-            aria-label="#LNG_Start new game"></input></li>
+            aria-label="#LNG_ChangeLanguageToCzech"></input></li>
+        <li><input type="button" class=squaredButton id="btnHelp" value="#LNG_Help"
+            aria-label="#LNG_Show help"></input></li>
+        <li><input type="button" class=squaredButton id="btnNewGame" value="#LNG_StartNewGame"
+            aria-label="#LNG_StartNewGame"></input></li>
         <li><input type="button" class=squaredButton id="btnSettings" value="#LNG_Sett."
-            aria-label="#LNG_Open dialog with game parameters"></input></li>
+            aria-label="#LNG_OpenDialogWithParameters"></input></li>
+            <li><input type="text" id="txtKeyboardEntry" value ="2"
+              aria-label="#LNG_KeyboardEntry"></input></li>
+        <li><input type="button" class=squaredButton id="btnAbout" value="#LNG_About">
+          </input></li>
       </ul>
     </nav>
 
@@ -38,20 +44,22 @@
       </div>
 
       <div id="sidebar">
-        <div id="scoreBoardDiv">
+        <div id="scoreBoardDiv" aria-label="Score">
         </div>
       </div>
     </div>
 
-    <div id="audioElementsContainer"></div>
+    <p id="whoIsOnMove" role="alert" aria-label="LNG_WhoIsOnMove"></p>
+
   </main>
 </body>
+
 <div id="turnOnJSWarning">Please enable javascript</div>
 
-<div id="sfc8wmakfyk4cy2496apf41rnde1bqaksp9"></div>
-
+<!-- Counter -->
+<!-- <div id="sfc8wmakfyk4cy2496apf41rnde1bqaksp9"></div>
 <div class="hidden">
- <!-- https://www.freecounterstat.com/geozoom.php?c=8wmakfyk4cy2496apf41rnde1bqaksp9&base=counter7 -->
+ https://www.freecounterstat.com/geozoom.php?c=8wmakfyk4cy2496apf41rnde1bqaksp9&base=counter7
   <script type="text/javascript"
     src="https://counter7.wheredoyoucomefrom.ovh/private/counter.js?c=8wmakfyk4cy2496apf41rnde1bqaksp9&down=async&FCS_visi=1&FCS_clic=1"
     async></script>
@@ -59,7 +67,7 @@
     <a href="https://www.freecounterstat.com" title="free counter">
       <img src="https://counter7.wheredoyoucomefrom.ovh/private/freecounterstat.php?c=8wmakfyk4cy2496apf41rnde1bqaksp9"
         border="0" title="free counter" alt="free counter"></a>
-  </noscript>
+  </noscript> --> 
 </div>
 
 </html>

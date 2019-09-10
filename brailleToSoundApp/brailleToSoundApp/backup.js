@@ -5,10 +5,6 @@
 
 let app = {};
 app.playSoundPaused = [];
-app.about = {};
-app.about.version = '0.9.1';
-app.about.author = 'Michal Jána';
-app.about.contact = 'michal.jana@hotmail.com';
 app.defSett = {};
 app.defSett.language = "ENG";
 app.defSett.delayBtwSounds = 0;
@@ -17,20 +13,19 @@ app.defSett.delayBtwChars = 1250;
 app.defSett.delayBtwWords = 2000;
 app.defSett.translationTableZoom = 0.2;
 
+
 window.onload = () => {
   app.init();
 };
 
 // Init
 app.init = async function () {
-  document.getElementById('turnOnJSWarning').innerHTML = '';
-  await app.getSettingsFromLocalStorage();
-  await app.translateToPreferredLanguage(app.preferredLanguage);
   await app.bindObjects();
   await app.bindEvents();
+  await app.getSettingsFromLocalStorage();
+  await app.translateToPreferredLanguage(app.preferredLanguage);
   app.assignValuesToSettingsInputs();
   app.triggerInputEvent();
-
 };
 
 function to(promise) {
@@ -120,10 +115,126 @@ function convertArrayToTable(arr) {
   return table;
 }
 
+// Translate to preferred language
+app.translateToPreferredLanguage = async function (language) {
+  for (let key in app.langDictionary) {
+    let translation = '';
+    for (let lng in app.langDictionary[key]) {
+      if (lng === language) {
+        translation = app.langDictionary[key][lng];
+        document.body.innerHTML = document.body.innerHTML.replace(key, translation);
+        document.head.innerHTML = document.head.innerHTML.replace(key, translation);
+      }
+    }
+  }
+};
+
+app.triggerInputEvent = function () {
+  // triggering input event in the original text area so that the braille translation appears
+  let event = new Event('input', {
+    'bubbles': true,
+    'cancelable': true
+  });
+  document.getElementById("originalText").dispatchEvent(event);
+};
+
+app.playDotSound = async function () {
+  app.dotSoundAudioControl.play();
+  await delay(app.dotSoundAudioControl.duration * 1000 + 50);
+  app.noDotSoundAudioControl.pause();
+  app.noDotSoundAudioControl.currentTime = 0;
+};
+
+app.playNoDotSound = async function () {
+  app.noDotSoundAudioControl.play();
+  await delay(app.noDotSoundAudioControl.duration * 1000 + 50);
+  app.noDotSoundAudioControl.pause();
+  app.noDotSoundAudioControl.currentTime = 0;
+};
+
+// Translates text into braille
+app.translateText = function (txt) {
+  let finalTxt = '';
+  let char = '';
+  let charTr = '';
+  let prevChar = '';
+  let txtArr = txt.toUpperCase().split('');
+
+  while (txtArr.length > 0) {
+    char = txtArr.splice(0, 1);
+
+    // replacing diacritics
+    if (mapDiacritics[char]) {
+      char = mapDiacritics[char];
+    }
+
+    // character is not a number
+    if (!brailleMapNumbers[char]) {
+      if (brailleMapNumbers[prevChar]) finalTxt += brailleMapSpecial.numberEnd + ' ';
+      charTr = brailleMapLetters[char];
+      if (!charTr) charTr = brailleMapSpecial[char];
+      if (char.toString().match(/\n/)) charTr = 'nnnlll';
+      if (!charTr) charTr = "001010" + ' ';  // asterisk replacing all unknown characters
+      finalTxt += charTr + ' ';
+    }
+    // is a number
+    else {
+      if (!brailleMapNumbers[prevChar]) finalTxt += brailleMapSpecial.number + ' ';
+      finalTxt += brailleMapNumbers[char] + ' ';
+    }
+    prevChar = char;
+  }
+
+  finalTxt = finalTxt.substring(0, finalTxt.length - 1);
+  return finalTxt;
+};
+
+// plays text from app.remainingTextToPlay variable
+app.playText = async function () {
+  await app.dotSoundAudioControl.load();
+  await app.noDotSoundAudioControl.load();
+  let position = app.playSoundPaused[1];
+  while (app.remainingTextToPlay.length > 0) {
+    if (app.playSoundPaused[0] || app.playSoundStopped) {
+      app.playSoundPaused[1] = position;
+      break;
+    }
+    let char = app.remainingTextToPlay.substring(0, 6);
+    if (char === '000000' || char === 'nnnlll') await delay(app.delayBtwWords);
+    else {
+      await app.playCharacter(char, position);
+      await delay(app.delayBtwChars);
+    }
+    app.remainingTextToPlay = app.remainingTextToPlay.substring(6, 99999999999);
+    if (char !== 'nnnlll') position += 6;
+  }
+};
+
+// plays one character of 6 bits
+app.playCharacter = async function (char, position) {
+  // console.log(position);
+  for (let i = 0; i < 6; i++) {
+    let bit = char.substring(i, i + 1);
+    if (bit === "1") {
+      document.getElementById(position + i).style.color = 'green';
+      await app.playDotSound();
+    }
+    else await app.playNoDotSound();
+
+    if (i === 2) await delay(app.delayBtwTriples);
+    else await delay(app.delayBtwSounds);
+  }
+};
+
+app.playAudio = async function () {
+  app.playSoundStopped = false;
+  app.playSoundPaused[0] = false;
+  app.playSoundPaused[1] = 0;
+  await app.playText();
+};
+
 app.bindObjects = async function () {
   // Identifying important controls and binding them to variables
-  app.mainDiv = document.querySelector('div.main');
-
   app.originalTextInput = document.getElementById("originalText");
 
   app.btnToggleBrailleTranslation = document.getElementById("btnToggleBrailleTranslation");
@@ -152,7 +263,6 @@ app.bindObjects = async function () {
 
 // Binding events to controls
 app.bindEvents = async function () {
-  document.getElementById("btnLangs").addEventListener('click', app.translateClick);
   document.getElementById("originalText").addEventListener(
     "input", async () => {
       let translatedText = app.translateText(app.originalTextInput.value);
@@ -222,19 +332,19 @@ app.bindEvents = async function () {
   app.btnToggleSoundControls.addEventListener(
     "click", () => {
       toggleElement(app.soundControlsDiv);
-      if (app.btnToggleSoundControls.getAttribute('aria-pressed') === 'false')
+      if (app.btnToggleSoundControls.getAttribute('aria-pressed') === 'false' )
         app.btnToggleSoundControls.setAttribute('aria-pressed', 'true');
       else app.btnToggleSoundControls.setAttribute('aria-pressed', 'false');
     }
   );
   app.settingsDiv.style.display = 'none'; // for some reason when doing the css the click only worked for the second time
   app.btnToggleSettings.addEventListener(
-    "click", () => {
+      "click", () => {
       toggleElement(app.settingsDiv);
-      if (app.btnToggleSettings.getAttribute('aria-pressed') === 'false')
+      if (app.btnToggleSettings.getAttribute('aria-pressed') === 'false' )
         app.btnToggleSettings.setAttribute('aria-pressed', 'true');
       else app.btnToggleSettings.setAttribute('aria-pressed', 'false');
-    }
+    } 
   );
   app.dotSoundInput.addEventListener(
     "change", () => {
@@ -257,139 +367,8 @@ app.bindEvents = async function () {
   app.delayBtwTriplesInput.addEventListener('change', app.updateSettingsValues);
   app.delayBtwCharsInput.addEventListener('change', app.updateSettingsValues);
   app.delayBtwWordsInput.addEventListener('change', app.updateSettingsValues);
-  document.querySelector('#btnAbout').addEventListener('click', () => {
-    alert(`author: ${app.about.author}\ncontact: ${app.about.contact}\nfeedback and suggestions are very welcome`);
-  });
-};
-
-
-// Translate to preferred language
-app.translateToPreferredLanguage = async function (language) {
-  document.body.style.display = 'none';
-  for (let key in langDictionary) {
-    let translation = '';
-    for (let lng in langDictionary[key]) {
-      if (lng === language) {
-        translation = langDictionary[key][lng];
-        let re = new RegExp(key, 'g');
-        document.body.innerHTML = document.body.innerHTML.replace(re, translation);
-        document.head.innerHTML = document.head.innerHTML.replace(re, translation);
-      }
-    }
-  }
-  document.body.style.display = 'block';
 
 };
-
-app.triggerInputEvent = function () {
-  // triggering input event in the original text area so that the braille translation appears
-  let event = new Event('input', {
-    'bubbles': true,
-    'cancelable': true
-  });
-  document.getElementById("originalText").dispatchEvent(event);
-};
-
-app.translateClick = function () {
-  app.preferredLanguage = this.value;
-  app.saveSettingsToLocalStorage();
-  location.reload(false);
-};
-
-app.playDotSound = async function () {
-  app.dotSoundAudioControl.play();
-  await delay(app.dotSoundAudioControl.duration * 1000 + 50);
-  app.noDotSoundAudioControl.pause();
-  app.noDotSoundAudioControl.currentTime = 0;
-};
-
-app.playNoDotSound = async function () {
-  app.noDotSoundAudioControl.play();
-  await delay(app.noDotSoundAudioControl.duration * 1000 + 50);
-  app.noDotSoundAudioControl.pause();
-  app.noDotSoundAudioControl.currentTime = 0;
-};
-
-// Translates text into braille
-app.translateText = function (txt) {
-  let finalTxt = '';
-  let char = '';
-  let charTr = '';
-  let prevChar = '';
-  let txtArr = txt.toUpperCase().split('');
-
-  while (txtArr.length > 0) {
-    char = txtArr.splice(0, 1);
-
-    // replacing diacritics
-    if (mapDiacritics[char]) {
-      char = mapDiacritics[char];
-    }
-
-    // character is not a number
-    if (!brailleMapNumbers[char]) {
-      if (brailleMapNumbers[prevChar]) finalTxt += brailleMapSpecial.numberEnd + ' ';
-      charTr = brailleMapLetters[char];
-      if (!charTr) charTr = brailleMapSpecial[char];
-      if (char.toString().match(/\n/)) charTr = 'nnnlll';
-      if (!charTr) charTr = "001010" + ' ';  // asterisk replacing all unknown characters
-      finalTxt += charTr + ' ';
-    }
-    // is a number
-    else {
-      if (!brailleMapNumbers[prevChar]) finalTxt += brailleMapSpecial.number + ' ';
-      finalTxt += brailleMapNumbers[char] + ' ';
-    }
-    prevChar = char;
-  }
-
-  finalTxt = finalTxt.substring(0, finalTxt.length - 1);
-  return finalTxt;
-};
-
-// plays text from app.remainingTextToPlay variable
-app.playText = async function () {
-  let position = app.playSoundPaused[1];
-  while (app.remainingTextToPlay.length > 0) {
-    if (app.playSoundPaused[0] || app.playSoundStopped) {
-      app.playSoundPaused[1] = position;
-      break;
-    }
-    let char = app.remainingTextToPlay.substring(0, 6);
-    if (char === '000000' || char === 'nnnlll') await delay(app.delayBtwWords);
-    else {
-      await app.playCharacter(char, position);
-      await delay(app.delayBtwChars);
-    }
-    app.remainingTextToPlay = app.remainingTextToPlay.substring(6, 99999999999);
-    if (char !== 'nnnlll') position += 6;
-  }
-};
-
-// plays one character of 6 bits
-app.playCharacter = async function (char, position) {
-  // console.log(position);
-  for (let i = 0; i < 6; i++) {
-    let bit = char.substring(i, i + 1);
-    if (bit === "1") {
-      document.getElementById(position + i).style.color = 'green';
-      await app.playDotSound();
-    }
-    else await app.playNoDotSound();
-
-    if (i === 2) await delay(app.delayBtwTriples);
-    else await delay(app.delayBtwSounds);
-  }
-};
-
-app.playAudio = async function () {
-  app.playSoundStopped = false;
-  app.playSoundPaused[0] = false;
-  app.playSoundPaused[1] = 0;
-  await app.playText();
-};
-
-
 
 app.updateSettingsValues = function () {
   app.dotSoundFileName = app.dotSoundInput.value.replace(/^.*[\\\/]/, '');
@@ -411,7 +390,7 @@ app.assignValuesToSettingsInputs = function () {
 };
 
 app.getSettingsFromLocalStorage = function () {
-  app.preferredLanguage = localStorage.getItem('preferredLanguage');
+  app.preferredLanguage = localStorage.getItem('preferredLanguage'); 
   app.dotSoundFileName = localStorage.getItem('dotSoundFileName');
   app.noDotSoundFileName = localStorage.getItem('noDotSoundFileName');
   app.delayBtwSounds = localStorage.getItem('delayBtwSounds');
@@ -421,24 +400,19 @@ app.getSettingsFromLocalStorage = function () {
   app.translationTableZoom = localStorage.getItem('translationTableZoom');
 
   // Default values
-  if (app.preferredLanguage === null || app.preferredLanguage === '')
+  if (app.preferredLanguage === null)
     app.preferredLanguage = app.defSett.language;
-
-  if (app.dotSoundFileName === null || app.dotSoundFileName === '')
+ 
+  if (app.dotSoundFileName === null)
     app.dotSoundFileName = 'ftus_instrument_drum_small_gamelan_hit_stick_single_001_477.mp3';
-  if (app.noDotSoundFileName === null || app.noDotSoundFileName === '')
+  if (app.noDotSoundFileName === null)
     app.noDotSoundFileName = 'ftus_musical_instrument_ching_gamelan_single_hit_001_529.mp3';
-  if (app.delayBtwSounds === null)
-    app.delayBtwSounds = app.defSett.delayBtwSounds;
+  if (app.delayBtwSounds === null) app.delayBtwSounds = app.deffSet.delayBtwSounds;
 
-  if (app.delayBtwTriples === null || app.delayBtwTriples === '')
-    app.delayBtwTriples = app.defSett.delayBtwTriples;
-  if (app.delayBtwChars === null || app.delayBtwChars === '')
-    app.delayBtwChars = app.defSett.delayBtwChars;
-  if (app.delayBtwWords === null || app.delayBtwWords === '')
-    app.delayBtwWords = app.defSett.delayBtwWords;
-  if (app.translationTableZoom === null || app.translationTableZoom === '')
-    app.translationTableZoom = app.defSett.translationTableZoom;
+  if (app.delayBtwTriples === null) app.delayBtwTriples = app.deffSet.delayBtwTriples;
+  if (app.delayBtwChars === null) app.delayBtwChars = app.deffSet.delayBtwChars;
+  if (app.delayBtwWords === null) app.delayBtwWords = app.deffSet.delayBtwWords;
+  if (app.translationTableZoom === null) app.translationTableZoom = app.deffSet.translationTableZoom;
 };
 
 app.saveSettingsToLocalStorage = function () {
@@ -542,31 +516,27 @@ const brailleMapSpecial = {
   "numberEnd": "011000"
 };
 
-const langDictionary = {
-  "#LNG_About": { "ENG" : "About", "CZ" : "O programu" }, 
-  "#LNG_BrailleTranslation": { "ENG" : "Braille translation", "CZ" : "Braillský překlad" }, 
-  "#LNG_Change_Imperative": { "ENG" : "Change", "CZ" : "Změň" }, 
-  "#LNG_ChangeLanguageToCzech": { "ENG" : "Zobraz v češtině", "CZ" : "Display in English" }, 
-  "#LNG_Choice": { "ENG" : "CZ", "CZ" : "ENG" }, 
-  "#LNG_DelayBetweenCharacters": { "ENG" : "Delay between characters", "CZ" : "Prodleva mezi písmeny" }, 
-  "#LNG_DelayBetweenSounds": { "ENG" : "Delay between sounds", "CZ" : "Prodleva mezi zvuky" }, 
-  "#LNG_DelayBetweenTriples": { "ENG" : "Delay between triples", "CZ" : "Prodleva mezi trojicemi" }, 
-  "#LNG_DelayBetweenWords": { "ENG" : "Delay between words", "CZ" : "Prodleva mezi slovy" }, 
-  "#LNG_Description": { "ENG" : "Appp translates text plays it out in Braille Morse", "CZ" : "Aplikace přeloží text a přehraje v Braillské morzeovce" }, 
-  "#LNG_DisplayInfoAboutProgram": { "ENG" : "Show infor about program", "CZ" : "Zobrazí informace o programu" }, 
-  "#LNG_DotSound": { "ENG" : "Dot Sound", "CZ" : "Zvuk tečky" }, 
-  "#LNG_EmptyDotSound": { "ENG" : "Empty Dot Sound", "CZ" : "Zvuk prázdné tečky" }, 
-  "#LNG_EnterSomeText": { "ENG" : "Enter some text to translate and play in Braille Morse", "CZ" : "Zadejte text pro překlad a přehrání v Braillské morzeovce" }, 
-  "#LNG_Pause": { "ENG" : "Pause", "CZ" : "Pauza" }, 
-  "#LNG_Play": { "ENG" : "Play", "CZ" : "Přehraj" }, 
-  "#LNG_Settings": { "ENG" : "Settings", "CZ" : "Nastavení" }, 
-  "#LNG_SoundControls": { "ENG" : "Sound Controls", "CZ" : "Ovladače zvuku" }, 
-  "#LNG_Stop": { "ENG" : "Stop", "CZ" : "Stop" }, 
-  "#LNG_Title": { "ENG" : "Braille to Braille-Morse Translator", "CZ" : "Překladač do braillské morzeovky" }, 
-  "#LNG_ToggleSettings": { "ENG" : "Show/hide settings", "CZ" : "Zobrazí/schová nastavení" }, 
-  "#LNG_ToggleSoundControls": { "ENG" : "Show / hide sound controls", "CZ" : "Zobrazí / schová ovládače zvuku" }, 
-  "#LNG_ToggleVisualTranslation": { "ENG" : "Show / hide visual Braille Translation", "CZ" : "Zobrazí / schová braillský překlad" }, 
-  "#LNG_YourMessage": { "ENG" : "Your message", "CZ" : "Vaše zpráva" }, 
-  "#LNG_ZoomIn": { "ENG" : "Zoom in", "CZ" : "Přiblížit" }, 
+app.langDictionary = {
+  "#LNG_Title": { "ENG": "Text to Braille to Braille Morse Translator", "CZ": "Překladač textu do brailské morzeovky" },
+  "#LNG_Description": { "ENG": "Appp translates text plays it out in Braille Morse", "CZ": "Aplikace přeloží text a přehraje v Braillské morzeovce" },
+  "#LNG_YourMessage": { "ENG": "Your message", "CZ": "Vaše zpráva" },
+  "#LNG_EnterSomeText": { "ENG": "Enter some text to translate and play in Braille Morse", "CZ": "Zadejte text pro překlad a přehrání v Braillské morzeovce" },
+  "#LNG_Play": { "ENG": "Play", "CZ": "Přehraj" },
+  "#LNG_Pause": { "ENG": "Pause", "CZ": "Pauza" },
+  "#LNG_Stop": { "ENG": "Stop", "CZ": "Stop" },
+  "#LNG_BrailleTranslation": { "ENG": "Braille translation", "CZ": "Braillský překlad" },
+  "#LNG_ToggleVisualTranslation": { "ENG": "Show / hide visual Braille Translation", "CZ": "Zobrazí / schová braillský překlad" },
+  "#LNG_ZoomIn": { "ENG": "Zoom in", "CZ": "Přiblížit" },
   "#LNG_ZoonOut": { "ENG": "Zoom out", "CZ": "Oddálit" },
+  "#LNG_SoundControls": { "ENG": "Sound Controls", "CZ": "Ovladače zvuku" },
+  "#LNG_ToggleSoundControls": { "ENG": "Show / hide sound controls", "CZ": "Zobrazí / schová ovládače zvuku" },
+  "#LNG_Settings": { "ENG": "Settings", "CZ": "Nastavení" },
+  "#LNG_ToggleSettings": { "ENG": "Show/hide settings", "CZ": "Zobrazí/schová nastavení" },
+  "#LNG_DoSound": { "ENG": "Dot sound", "CZ": "Zvuk tečky" },
+  "#LNG_NoDotSound": { "ENG": "No dot sound", "CZ": "Zvuk prázdného místa" },
+  "#LNG_Change_Imperative": { "ENG": "Change", "CZ": "Změň" },
+  "#LNG_DelayBetweenSounds": { "ENG": "Delay between sounds", "CZ": "Prodleva mezi zvuky" },
+  "#LNG_DelayBetweenTriples": { "ENG": "Delay between triples", "CZ": "Prodleva mezi trojicemi" },
+  "#LNG_DelayBetweenCharacters": { "ENG": "Delay between characters", "CZ": "Prodleva mezi písmeny" },
+  "#LNG_DelayBetweenWords": { "ENG": "Delay between words", "CZ": "Prodleva mezi slovy" },
 };

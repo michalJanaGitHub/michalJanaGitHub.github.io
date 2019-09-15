@@ -22,7 +22,9 @@ page.sendApplication = function () {
 
   let xhr = new XMLHttpRequest();
   let url = "url";
-  if (page.testVersion) url = "http://localhost:3000/application";
+
+  //test
+  if ( url==="url" && page.testVersion) url = "http://localhost:3000/application";
 
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json");

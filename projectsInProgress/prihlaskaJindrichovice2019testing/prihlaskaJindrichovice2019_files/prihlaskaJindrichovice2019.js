@@ -45,42 +45,42 @@ function createTestingVersion() {
   // Prepend it
   el.insertBefore(elChild, el.firstChild);
 
-  document.getElementById("childName").value = "Anička Nováková";
-  document.getElementById("childPIN").value = "080512/1234";
-  document.getElementById("childInsuranceCompany").value = "Hasičská zdravotní pojišťovna";
-  document.getElementById("childAddress").value = "Dolní 5, 123 45 Havířov";
+  document.getElementById("diteJmeno").value = "Anička Nováková";
+  document.getElementById("diteRC").value = "080512/1234";
+  document.getElementById("ditePojistovna").value = "Hasičská zdravotní pojišťovna";
+  document.getElementById("diteadresa").value = "Dolní 5, 123 45 Havířov";
 
-  document.getElementById("legalRepName").value = "Anna Nováková";
-  document.getElementById("legalRepRelation").value = "Matka";
-  document.getElementById("legalRepTel").value = "732003551";
-  document.getElementById("legalRepEmail").value = "anna.novakova@gmail.com";
-  document.getElementById("legalRep2Name").value = "Josef Novák";
-  document.getElementById("legalRep2Relation").value = "Otec";
-  document.getElementById("legalRep2Tel").value = "+421732003552";
-  document.getElementById("legalRep2Email").value = "josef.novak@gmail.com";
+  document.getElementById("zakZastJmeno").value = "Anna Nováková";
+  document.getElementById("zakZastVztah").value = "Matka";
+  document.getElementById("zakZasTel").value = "732003551";
+  document.getElementById("zakZasEmail").value = "anna.novakova@gmail.com";
+  document.getElementById("zakZast2Jmeno").value = "Josef Novák";
+  document.getElementById("zakZast2Vztah").value = "Otec";
+  document.getElementById("zakZast2Tel").value = "+421732003552";
+  document.getElementById("zakZast2Email").value = "josef.novak@gmail.com";
 
-  document.getElementsByName("howAboutEyeSight")[0].checked = true;  
-  document.getElementsByName("canBraille")[0].checked = true;
-  document.getElementsByName("canWhiteCane")[0].checked = true;
-  document.getElementsByName("bringWhiteCane")[0].checked = true;
-  document.getElementById("eyesightDetails").value = "bez brýlí toho moc nevidí";
-  document.getElementById("movementRestrictionsEyeSight").value = "ne";
+  document.getElementsByName("jakDiteVidi")[0].checked = true;  
+  document.getElementsByName("umiBraille")[0].checked = true;
+  document.getElementsByName("umiSBilouHoli")[0].checked = true;
+  document.getElementsByName("budeMitBilouHul")[0].checked = true;
+  document.getElementById("zrakDetaily").value = "bez brýlí toho moc nevidí";
+  document.getElementById("omezeniSkrZrakVadu").value = "ne";
   
-  document.getElementById("allDrugs").value = "ne";
-  document.getElementById("otherAllergiesDetails").value = "ne";
-  document.getElementById("foodAllergiesDetails").value = "ne";  
-  document.getElementById("otherIllnesses").value = "ne";
-  document.getElementById("somethingElseToKnowDetails").value = "ne";
+  document.getElementById("uzivaneLeky").value = "ne";
+  document.getElementById("ostatniAlergieDetaily").value = "ne";
+  document.getElementById("zakazanePotraviny").value = "ne";  
+  document.getElementById("ostatniNemoci").value = "ne";
+  document.getElementById("jesteNecoBychomMeliVedet").value = "ne";
   document.getElementById("doctorContact").value = "Mudr. Jiří Novák, 987 777 554, Havířov";
 
-  document.getElementsByName("bedWetting")[0].checked = true;  
+  document.getElementsByName("pomocovani")[0].checked = true;  
   document.getElementsByName("canSleepInBunkBed")[0].checked = true;
   document.getElementsByName("canSwim")[0].checked = true;
   document.getElementsByName("nightBattleGame")[0].checked = true;
-  document.getElementById("childCharacteristics").value = "Anička je super"
+  document.getElementById("diteCharakterizuj").value = "Anička je super"
 
-  document.getElementsByName("gdprCanPublish")[0].checked = true;  
-  document.getElementsByName("gdprCanTag")[0].checked = true;
+  document.getElementsByName("gdprSouhlasSeZverejnenim")[0].checked = true;  
+  document.getElementsByName("gdprMuzemOznacit")[0].checked = true;
   
   // removeElement("frmRegChildPersonalData");   
   // removeElement("frmRegContactPersons");

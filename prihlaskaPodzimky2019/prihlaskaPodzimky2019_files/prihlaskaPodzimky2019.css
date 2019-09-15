@@ -24,8 +24,6 @@ h4 {
   margin-bottom: 40px;
 }
 
-
-
 form fieldset {
   background: var(--form-background);
   border: 0.5mm solid var(--dark-grey);
@@ -51,11 +49,13 @@ form fieldset div.outerBorder {
 form fieldset div.w50PerCent {
   display: inline-block;
   width: 49%;
+  vertical-align: top;
 }
 
 form fieldset div.w33PerCent {
   display: inline-block;
   width: 32.5%;
+  vertical-align: top;
 }
 
 form fieldset div.w25PerCent {

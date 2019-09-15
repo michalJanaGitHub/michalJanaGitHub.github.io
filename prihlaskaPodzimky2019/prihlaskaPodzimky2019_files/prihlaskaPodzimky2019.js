@@ -1,7 +1,7 @@
 let page = {};
 let pom = {};
 
-// na ostr verzi změnit na false
+// na ostré verzi změnit na false
 page.testVersion = true;
 
 window.onload = () => {
@@ -10,8 +10,9 @@ window.onload = () => {
 };
 
 page.init = async function () {
-  document.querySelector('body').style.display = 'block';
+  document.querySelector('main').style.display = 'block';
   document.querySelector('#frmRegistration').addEventListener('submit', page.sendApplication);
+  document.querySelector('#turnOnJSWarning').style.display = 'none';
 };
 
 page.sendApplication = function () {

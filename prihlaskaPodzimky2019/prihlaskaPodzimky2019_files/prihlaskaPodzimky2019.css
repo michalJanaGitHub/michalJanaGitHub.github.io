@@ -20,6 +20,10 @@ body {
   width: 800px;
 }
 
+main {
+  display:none;
+}
+
 h4 {
   margin-bottom: 40px;
 }

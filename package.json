@@ -5,7 +5,6 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify main.js > bundle.js && live-server"
   },
   "repository": {
     "type": "git",
@@ -18,6 +17,5 @@
   },
   "homepage": "https://github.com/michalJanaGitHub/michalJanaGitHub.github.io#readme",
   "dependencies": {
-    "lodash": "^4.17.11"
   }
 }
